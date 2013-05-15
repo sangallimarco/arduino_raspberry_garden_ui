@@ -7,7 +7,7 @@ import time
 ########################################
 class gardenBridge(object):
 	def __init__(self):
-		self.temp = 10
+		self.temp = 5
 		self.humidity = 95
 		self.wind = 10
 		self.delay = 60*15

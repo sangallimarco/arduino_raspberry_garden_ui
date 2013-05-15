@@ -57,10 +57,12 @@ def status():
 	#get params back
 	temp,humidity,wind,rain,switch = gardenBridge.getForecast()
 	delay = gardenBridge.getDelay()
-	
+	ptemp,phumidity,pwind = gardenBridge.getParams()
+
+	#get current device status
+	#
 	#render page
-	flash('Pumps On!', 'Welcome')
-	return render_template('status.html',name="index")
+	return render_template('status.html',temp=temp,humidity=humidity,wind=wind,rain=rain,switch=switch,ptemp=ptemp,phumidity=phumidity,pwind=pwind)
 
 #######################
 # 404 error ###########
