@@ -2,6 +2,7 @@
 from ardutelnet import engineManager
 from threading import Thread
 import urllib2,re,time, json
+import requests
 import time
 
 ########################################
@@ -28,8 +29,7 @@ class gardenBridge(object):
 
 	def getForecast(self):
 		url="http://www.myweather2.com/developer/forecast.ashx?uac=.frFFHX1sj&query=SE21&output=json"
-		content = urllib2.urlopen(url).read()
-		print content
+		content = requests.get(url)
 		
 		current = None
 		temp = 0
@@ -39,7 +39,7 @@ class gardenBridge(object):
 		switch = False
 
 		if(content):
-			res = json.loads(content)
+			res = content.json()
 			current = res['weather']['curren_weather'][0]
 			
 			#no rain data grep from text
