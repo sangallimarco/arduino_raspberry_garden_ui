@@ -16,9 +16,9 @@ class gardenBridge(object):
 		self.delay = delay
 
 	def setParams(self,temp,humidity,wind):
-		self.temp = temp
-		self.humidity = humidity
-		self.wind = wind
+		self.temp = int(temp)
+		self.humidity = int(humidity)
+		self.wind = int(wind)
 
 	def getParams(self):
 		return (self.temp,self.humidity,self.wind)
@@ -29,6 +29,7 @@ class gardenBridge(object):
 	def getForecast(self):
 		url="http://www.myweather2.com/developer/forecast.ashx?uac=.frFFHX1sj&query=SE21&output=json"
 		content = urllib2.urlopen(url).read()
+		print content
 		
 		current = None
 		temp = 0
@@ -55,9 +56,10 @@ class gardenBridge(object):
 			humidity=int(current['humidity'])
 			wind=int(current['wind'][0]['speed'])
 			
-		#check conditions
-		if humidity<self.humidity and wind<self.wind and temp>=self.temp:
-			switch=True
+			#check conditions
+			if humidity<=self.humidity and wind<=self.wind and temp>=self.temp:
+				switch=True
+				print "ok"
 
 		#print res
 		return temp,humidity,wind,rain,switch
