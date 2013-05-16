@@ -42,10 +42,10 @@
 	<div class="row">
 			<h1>Controls</h1>
 			<div class="span6">
-				<a href="/remote/all" class="btn btn-primary btn-block btn-large {% if not switch or params['rain']: %}disabled{% endif %}">Start All Areas</a>
+				<button onclick="document.location.href='/remote/all'" class="btn btn-primary btn-block btn-large" {% if not switch or params['rain']: %}disabled{% endif %}>Start All Areas</button>
 			</div>
 			<div class="span6">
-				<a href="/remote/single" class="btn btn-primary btn-block btn-large {% if not switch: %}disabled{% endif %}">Start Single Area</a>
+				<button onclick="document.location.href='/remote/single'" class="btn btn-primary btn-block btn-large" {% if not switch: %}disabled{% endif %}>Start Single Area</button>
 			</div>
 	</div>
 
