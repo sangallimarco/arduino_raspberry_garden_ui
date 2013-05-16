@@ -12,9 +12,10 @@ class gardenBridge(object):
 		self.humidity = 95
 		self.wind = 10
 		self.delay = 60*15
+		self.cache = None
 
-	def setTimer(self,delay):
-		self.delay = delay
+	def setDelay(self,delay):
+		self.delay = int(delay)
 
 	def setParams(self,temp,humidity,wind):
 		self.temp = int(temp)
@@ -35,7 +36,7 @@ class gardenBridge(object):
 		temp = 0
 		humidity = 0
 		wind = 0
-		rain = 0
+		rain = False
 		switch = False
 
 		if(content):
@@ -50,7 +51,7 @@ class gardenBridge(object):
 			rain = 0
 			for i in rl:
 				if i in wt:
-					rain = 1
+					rain = True
 					
 			temp=int(current['temp'])
 			humidity=int(current['humidity'])
@@ -59,7 +60,6 @@ class gardenBridge(object):
 			#check conditions
 			if humidity<=self.humidity and wind<=self.wind and temp>=self.temp:
 				switch=True
-				print "ok"
 
 		#print res
 		return temp,humidity,wind,rain,switch

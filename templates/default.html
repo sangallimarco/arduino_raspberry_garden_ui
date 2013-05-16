@@ -14,12 +14,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="brand" href="/index">Remote v1.0</a>
+					<a class="brand" href="/">Remote v1.0</a>
 						<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li><a href="/dash">Dash</a></li>
 							<li><a href="/status">Status</a></li>
-							<li><a href="/activate">Controls</a></li>
+							<li><a href="/activate">Activate Test</a></li>
+							<li><a href="/check">System Check</a></li>
 						</ul>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 			{% with messages = get_flashed_messages(with_categories=true) %}
 				{% if messages %}
 					{% for category, message in messages %}
-						<div class="alert alert-{{ category }}">{{ message }}</div>
+						<div class="alert alert-{{ category }}"><h3>{{ message }}</h3></div>
 					{% endfor %}
 				{% endif %}
 			{% endwith %}

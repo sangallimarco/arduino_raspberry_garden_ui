@@ -12,15 +12,8 @@ gardenBridge = gardenBridge()
 #######################
 # home page ###########
 #######################
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
-	name = request.args.get('name', '')
-	if name != '':
-		flash('Single Pump On', 'error')
-		return redirect(url_for('index'))
-	else:
-		return render_template('index.html',name="index")
-
 	return render_template('index.html',name=name)
 
 #######################
@@ -51,6 +44,7 @@ def status():
 	#get parameters
 	if request.method == 'POST':
 		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind']) 
+		gardenBridge.setDelay(request.form['delay'])
 		flash('New params saved', 'success')
 		return redirect(url_for('status'))
 
@@ -62,7 +56,28 @@ def status():
 	#get current device status
 	#
 	#render page
-	return render_template('status.html',temp=temp,humidity=humidity,wind=wind,rain=rain,switch=switch,ptemp=ptemp,phumidity=phumidity,pwind=pwind)
+	return render_template('status.html',temp=temp,humidity=humidity,wind=wind,rain=rain,switch=switch,ptemp=ptemp,phumidity=phumidity,pwind=pwind,delay=delay)
+
+#######################
+# force system ########
+#######################
+@app.route('/remote/<type>')
+def remote(type):
+	#if condition satisfied put engine on!
+	connected = garden.isConnected()
+	delay = gardenBridge.getDelay()
+	if connected: 
+		if type == 'all':
+			garden.pumpsOn(delay)
+			flash('All Pumps Activated', 'success')
+		else:
+			garden.singlepumpOn(delay)
+			flash('Protected Area Pump Activated', 'success')
+	else:
+		flash('ARDUINO not connected!', 'error')
+
+	#return a flag
+	return redirect(url_for('status'))
 
 #######################
 # 404 error ###########
