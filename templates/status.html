@@ -16,19 +16,19 @@
 					<legend>Change values</legend>
 
 					<label>Min Temperature Celsius</label>
-					<input type="text" placeholder="Type something…" name="temp" value="{{ptemp}}">
+					<input type="text" placeholder="Type something…" name="temp" value="{{hparams['temp']}}">
 					</label>
 
 					<label>Max Humidity %</label>
-					<input type="text" placeholder="Type something…" name="humidity" value="{{phumidity}}">
+					<input type="text" placeholder="Type something…" name="humidity" value="{{hparams['humidity']}}">
 					</label>
 
 					<label>Max Wind Mph</label>
-					<input type="text" placeholder="Type something…" name="wind" value="{{pwind}}">
+					<input type="text" placeholder="Type something…" name="wind" value="{{hparams['wind']}}">
 					</label>
 
 					<label>Pump Watering Time (seconds)</label>
-					<input type="text" placeholder="Type something…" name="delay" value="{{delay}}">
+					<input type="text" placeholder="Type something…" name="delay" value="{{hparams['delay']}}">
 					</label>
 					
 					<label>Set new values</label>
@@ -42,7 +42,7 @@
 	<div class="row">
 			<h1>Controls</h1>
 			<div class="span6">
-				<a href="/remote/all" class="btn btn-primary btn-block btn-large {% if not switch or rain: %}disabled{% endif %}">Start All Areas</a>
+				<a href="/remote/all" class="btn btn-primary btn-block btn-large {% if not switch or params['rain']: %}disabled{% endif %}">Start All Areas</a>
 			</div>
 			<div class="span6">
 				<a href="/remote/single" class="btn btn-primary btn-block btn-large {% if not switch: %}disabled{% endif %}">Start Single Area</a>
@@ -73,9 +73,9 @@
 
 		//
 		function drawChart() {
-			drawGauge('Temp','temp',{{temp}},{{ptemp}},{{ptemp}},100);
-			drawGauge('Hum','hum',{{humidity}},{{phumidity}},0,{{phumidity}});
-			drawGauge('Wind','wind',{{wind}},{{pwind}},0,{{pwind}});
+			drawGauge('Temp','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},100);
+			drawGauge('Hum','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}});
+			drawGauge('Wind','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}});
 		}
 	</script>
 {% endblock %}

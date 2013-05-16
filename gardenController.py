@@ -14,23 +14,21 @@ class gardenBridge(object):
 		self.delay = 60*15
 		self.cache = None
 
-	def setDelay(self,delay):
-		self.delay = int(delay)
-
-	def setParams(self,temp,humidity,wind):
+	def setParams(self,temp,humidity,wind,delay):
 		self.temp = int(temp)
 		self.humidity = int(humidity)
 		self.wind = int(wind)
+		self.delay = int(delay)
 
 	def getParams(self):
-		return (self.temp,self.humidity,self.wind)
-
-	def getDelay(self):
-		return self.delay
+		return {'temp':self.temp,'humidity':self.humidity,'wind':self.wind,'delay':self.delay}
 
 	def getForecast(self):
 		url="http://www.myweather2.com/developer/forecast.ashx?uac=.frFFHX1sj&query=SE21&output=json"
-		content = requests.get(url)
+		try:
+			res = requests.get(url).json()
+		except:
+			res = False
 		
 		current = None
 		temp = 0
@@ -38,17 +36,17 @@ class gardenBridge(object):
 		wind = 0
 		rain = False
 		switch = False
+		wt = False
 
-		if(content):
-			res = content.json()
+		if(res):
 			current = res['weather']['curren_weather'][0]
 			
 			#no rain data grep from text
 			wt = current['weather_text'].upper()
-			rl = ['MIST','RAIN','CLOUD']
+			rl = ['MIST','RAIN']
 			
 			#check if it's raining
-			rain = 0
+			rain = False
 			for i in rl:
 				if i in wt:
 					rain = True
@@ -62,7 +60,7 @@ class gardenBridge(object):
 				switch=True
 
 		#print res
-		return temp,humidity,wind,rain,switch
+		return switch,{'temp':temp,'humidity':humidity,'wind':wind,'rain':rain,'current':wt}
 			
 ########################################
 class actionTimer(Thread):

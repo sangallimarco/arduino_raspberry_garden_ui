@@ -1,0 +1,57 @@
+{% extends "default.html" %}
+
+{% block body %}
+
+	<div class="row">
+		<h1>System Status</h1>
+
+		<div class="span5">
+			<table class="table table-striped table-bordered">
+				<fieldset>
+					<legend>Live Data Dump</legend>
+
+					<thead>
+						<tr>
+							<th class="span3">Label</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for key, value in params.items() %}
+						<tr>
+							<td>{{key|capitalize}}</td><td>{{value}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+
+			</table>
+		</div>
+		<div class="span5 offset2">
+			<table class="table table-striped table-bordered">
+				<fieldset>
+					<legend>Settings Dump</legend>
+
+					<thead>
+						<tr>
+							<th class="span3">Label</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for key, value in hparams.items() %}
+						<tr>
+							<td>{{key|capitalize}}</td><td>{{value}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+
+			</table>
+		</div>
+
+	</div>
+
+
+{% endblock %}
+

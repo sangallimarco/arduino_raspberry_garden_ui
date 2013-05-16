@@ -21,20 +21,43 @@ def index():
 @app.route('/activate')
 def activate():
 	#get values from testThread
-	temp,humidity,wind,rain,switch = gardenBridge.getForecast()
-	delay = gardenBridge.getDelay()
+	switch,params = gardenBridge.getForecast()
+	hparams = gardenBridge.getParams()
+	pumps = 'Off'
 
 	#if condition satisfied put engine on!
 	connected = garden.isConnected() 
 	if switch and connected:
-		if rain<1:
-			garden.pumpsOn(delay)
+		if not params['rain']:
+			garden.pumpsOn(hparams['delay'])
+			pumps = 'All'
 		else:
-			garden.singlepumpOn(delay)
+			garden.singlepumpOn(hparams['delay'])
+			pumps = 'Single'
 
 	#return a flag
-	return jsonify(connected=connected, switch=switch)
+	return jsonify(connected=connected, switch=switch, rain=params['rain'], pumps=pumps)
 	
+#######################
+# call it from cron ###
+#######################
+@app.route('/check')
+def check():
+	#get values from testThread
+	switch,params = gardenBridge.getForecast()
+	if params['current']:
+		params['forecast'] = True
+	else:
+		params['forecast'] = False
+
+	hparams = gardenBridge.getParams()
+
+	#if condition satisfied put engine on!
+	connected = garden.isConnected() 
+
+	#return
+	return render_template('check.html',params=params,hparams=hparams,connected=connected)
+
 #######################
 # render status #######
 #######################
@@ -42,20 +65,16 @@ def activate():
 def status():
 	#get parameters
 	if request.method == 'POST':
-		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind']) 
-		gardenBridge.setDelay(request.form['delay'])
+		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind'],request.form['delay']) 
 		flash('New params saved', 'success')
 		return redirect(url_for('status'))
 
 	#get params back
-	temp,humidity,wind,rain,switch = gardenBridge.getForecast()
-	delay = gardenBridge.getDelay()
-	ptemp,phumidity,pwind = gardenBridge.getParams()
+	switch,params = gardenBridge.getForecast()
+	hparams = gardenBridge.getParams()
 
-	#get current device status
-	#
 	#render page
-	return render_template('status.html',temp=temp,humidity=humidity,wind=wind,rain=rain,switch=switch,ptemp=ptemp,phumidity=phumidity,pwind=pwind,delay=delay)
+	return render_template('status.html',switch=switch,params=params,hparams=hparams)
 
 #######################
 # force system ########
@@ -64,13 +83,13 @@ def status():
 def remote(type):
 	#if condition satisfied put engine on!
 	connected = garden.isConnected()
-	delay = gardenBridge.getDelay()
+	hparams = gardenBridge.getParams()
 	if connected: 
 		if type == 'all':
-			garden.pumpsOn(delay)
+			garden.pumpsOn(hparams['delay'])
 			flash('All Pumps Activated', 'success')
 		else:
-			garden.singlepumpOn(delay)
+			garden.singlepumpOn(hparams['delay'])
 			flash('Protected Area Pump Activated', 'success')
 	else:
 		flash('ARDUINO not connected!', 'error')
