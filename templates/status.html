@@ -1,0 +1,82 @@
+{% extends "default.html" %}
+
+{% block body %}
+
+	<div class="row">
+		<h1>Parameters Configuration</h1>
+
+		<div id="temp" class="span3"></div>
+		<div id="hum" class="span3"></div>
+		<div id="wind" class="span3"></div>
+	
+
+		<div class="span2">
+			<form method="POST">
+				<fieldset>
+					<legend>Change values</legend>
+
+					<label>Min Temperature Celsius</label>
+					<input type="text" placeholder="Type something…" name="temp" value="{{ptemp}}">
+					</label>
+
+					<label>Max Humidity %</label>
+					<input type="text" placeholder="Type something…" name="humidity" value="{{phumidity}}">
+					</label>
+
+					<label>Max Wind Mph</label>
+					<input type="text" placeholder="Type something…" name="wind" value="{{pwind}}">
+					</label>
+
+					<label>Pump Watering Time (seconds)</label>
+					<input type="text" placeholder="Type something…" name="delay" value="{{delay}}">
+					</label>
+					
+					<label>Set new values</label>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					</label?
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+			<h1>Controls</h1>
+			<div class="span6">
+				<a href="/remote/all" class="btn btn-primary btn-block btn-large {% if not switch or rain: %}disabled{% endif %}">Start All Areas</a>
+			</div>
+			<div class="span6">
+				<a href="/remote/single" class="btn btn-primary btn-block btn-large {% if not switch: %}disabled{% endif %}">Start Single Area</a>
+			</div>
+	</div>
+
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	<script type='text/javascript'>
+		google.load('visualization', '1', {packages:['gauge']});
+		google.setOnLoadCallback(drawChart);
+
+		function drawGauge(label,id,value,pvalue,from,to){
+			var data = google.visualization.arrayToDataTable([
+				['Label', 'Value'],
+				[label, value],
+			]);
+
+			var options = {
+				width: 220, height: 300,
+				redFrom: pvalue, redTo: pvalue+2,
+				greenFrom:from,greenTo:to,
+				minorTicks: 5
+			};
+
+			var chart = new google.visualization.Gauge(document.getElementById(id));
+			chart.draw(data, options);
+		}
+
+		//
+		function drawChart() {
+			drawGauge('Temp','temp',{{temp}},{{ptemp}},{{ptemp}},100);
+			drawGauge('Hum','hum',{{humidity}},{{phumidity}},0,{{phumidity}});
+			drawGauge('Wind','wind',{{wind}},{{pwind}},0,{{pwind}});
+		}
+	</script>
+{% endblock %}
+

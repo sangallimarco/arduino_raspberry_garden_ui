@@ -1,6 +1,5 @@
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
 from gardenController import *
-from testThread import *
 
 #####################################################
 app = Flask(__name__)
