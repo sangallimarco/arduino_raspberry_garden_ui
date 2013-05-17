@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-from ardutelnet import engineManager
+from libs.ardutelnet import engineManager
 from threading import Thread
 import urllib2,re,time, json
 import requests
 import time
 import pickle
+from libs.cache import memCache
 
 ########################################
 class gardenBridge(object):
 	def __init__(self,apikey='.frFFHX1sj'):
 		self.params = {}
-		self.cache = None
-		self.postcode = 'SE21'
+		self.cache = memCache()
+		self.postcode = 'RM9'
 		self.apikey = apikey
 		self.file = 'app.cfg'
 		#get from stored params
@@ -31,6 +32,8 @@ class gardenBridge(object):
 		self.params['postcode'] = postcode
 		#save
 		pickle.dump(self.params,open(self.file,'w'))
+		#remove chached value
+		self.cache.unset('forecast')
 
 	def getParams(self):
 		return self.params
@@ -38,11 +41,17 @@ class gardenBridge(object):
 	def getForecast(self):
 		#get from postcode forecast
 		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query=%s&output=json" % (self.apikey,self.params['postcode'])
-		print url
-		try:
-			res = requests.get(url).json()
-		except:
-			res = False
+		
+		#check cache
+		res = self.cache.get('forecast')
+		if not res:
+			print url
+			try:
+				res = requests.get(url).json()
+			except:
+				res = False
+			else:
+				self.cache.set('forecast',res)
 		#
 		current = None
 		temp = 0
