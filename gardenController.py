@@ -7,24 +7,28 @@ import time
 
 ########################################
 class gardenBridge(object):
-	def __init__(self):
+	def __init__(self,apikey='.frFFHX1sj'):
 		self.temp = 5
 		self.humidity = 95
 		self.wind = 10
 		self.delay = 60*15
 		self.cache = None
+		self.postcode = 'SE21'
+		self.apikey = apikey
 
-	def setParams(self,temp,humidity,wind,delay):
+	def setParams(self,temp,humidity,wind,delay,postcode):
 		self.temp = int(temp)
 		self.humidity = int(humidity)
 		self.wind = int(wind)
 		self.delay = int(delay)
+		self.postcode = postcode
 
 	def getParams(self):
-		return {'temp':self.temp,'humidity':self.humidity,'wind':self.wind,'delay':self.delay}
+		return {'temp':self.temp,'humidity':self.humidity,'wind':self.wind,'delay':self.delay,'postcode':self.postcode}
 
 	def getForecast(self):
-		url="http://www.myweather2.com/developer/forecast.ashx?uac=.frFFHX1sj&query=SE21&output=json"
+		#get from postcode forecast
+		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query%s&output=json" % (this.apikey,this.postcode)
 		try:
 			res = requests.get(url).json()
 		except:
@@ -43,7 +47,7 @@ class gardenBridge(object):
 			
 			#no rain data grep from text
 			wt = current['weather_text'].upper()
-			rl = ['MIST','RAIN']
+			rl = ['MIST','RAIN','CLOUD']
 			
 			#check if it's raining
 			rain = False

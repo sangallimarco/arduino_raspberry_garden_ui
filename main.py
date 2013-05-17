@@ -65,7 +65,7 @@ def check():
 def status():
 	#get parameters
 	if request.method == 'POST':
-		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind'],request.form['delay']) 
+		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind'],request.form['delay'],request.form['postcode']) 
 		flash('New params saved', 'success')
 		return redirect(url_for('status'))
 
