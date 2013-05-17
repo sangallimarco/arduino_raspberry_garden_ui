@@ -82,6 +82,9 @@ class actionTimer(Thread):
 		self.actions=actions
 		self.callback=callback
 		self.start()
+
+	def isAlive(self):
+		return True
 		
 	def run(self):
 		while len(self.actions)>0:
@@ -111,6 +114,7 @@ class customEngine(engineManager):
 		#@@@p=pinger(self.sendCmd)
 		self.bridge = "C"
 		self.pins = ["D","E","F","G"]
+		self.time = None
 
 		engineManager.__init__(self,host)
 		
@@ -149,13 +153,21 @@ class customEngine(engineManager):
 		for i in self.pins:
 			cmd += self.createCmd(i,on,off)
 		#
-		t=actionTimer(cmd,self.sendCmd)
+		self.timer=actionTimer(cmd,self.sendCmd)
 		
 	def singlepumpOn(self,on=10,off=2):
 		#pass all to a timer
 		cmd = self.createCmd(self.pins[0],on,off)
 		#
-		t=actionTimer(cmd,self.sendCmd)
+		self.timer=actionTimer(cmd,self.sendCmd)
+
+	def isReady(self):
+		try:
+			self.timer.isAlive()
+		except:
+			return False
+		else:
+			return True
 
 ########################################
 if __name__=="__main__":

@@ -28,12 +28,15 @@ def activate():
 	#if condition satisfied put engine on!
 	connected = garden.isConnected() 
 	if switch and connected:
-		if not params['rain']:
-			garden.pumpsOn(hparams['delay'])
-			pumps = 'All'
+		if garden.isReady():
+			if not params['rain']:
+				garden.pumpsOn(hparams['delay'])
+				pumps = 'All'
+			else:
+				garden.singlepumpOn(hparams['delay'])
+				pumps = 'Single'
 		else:
-			garden.singlepumpOn(hparams['delay'])
-			pumps = 'Single'
+			pumps = 'Running'
 
 	#return a flag
 	return jsonify(connected=connected, switch=switch, rain=params['rain'], pumps=pumps)
@@ -85,12 +88,16 @@ def remote(type):
 	connected = garden.isConnected()
 	hparams = gardenBridge.getParams()
 	if connected: 
-		if type == 'all':
-			garden.pumpsOn(hparams['delay'])
-			flash('All Pumps Activated', 'success')
+		#check if is ready to accept a new queue
+		if garden.isReady():
+			if type == 'all':
+				garden.pumpsOn(hparams['delay'])
+				flash('All Pumps Activated', 'success')
+			else:
+				garden.singlepumpOn(hparams['delay'])
+				flash('Protected Area Pump Activated', 'success')
 		else:
-			garden.singlepumpOn(hparams['delay'])
-			flash('Protected Area Pump Activated', 'success')
+			flash('Pumps Running...', 'warning')
 	else:
 		flash('ARDUINO not connected!', 'error')
 
