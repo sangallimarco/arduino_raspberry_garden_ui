@@ -37,7 +37,7 @@ class gardenBridge(object):
 
 	def getForecast(self):
 		#get from postcode forecast
-		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query=%s&output=json" % (self.apikey,self.postcode)
+		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query=%s&output=json" % (self.apikey,self.params['postcode'])
 		print url
 		try:
 			res = requests.get(url).json()
