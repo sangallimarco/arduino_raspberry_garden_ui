@@ -4,36 +4,46 @@ from threading import Thread
 import urllib2,re,time, json
 import requests
 import time
+import pickle
 
 ########################################
 class gardenBridge(object):
 	def __init__(self,apikey='.frFFHX1sj'):
-		self.temp = 5
-		self.humidity = 95
-		self.wind = 10
-		self.delay = 60*15
+		self.params = {}
 		self.cache = None
 		self.postcode = 'SE21'
 		self.apikey = apikey
+		self.file = 'app.cfg'
+		#get from stored params
+		self.__init()
+
+	def __init(self):
+		try:
+			self.params = pickle.load(open(self.file,'r'))
+		except:
+			self.params = {'temp':5,'humidity':90,'wind':8,'delay':60*5,'postcode':'RM9'}
 
 	def setParams(self,temp,humidity,wind,delay,postcode):
-		self.temp = int(temp)
-		self.humidity = int(humidity)
-		self.wind = int(wind)
-		self.delay = int(delay)
-		self.postcode = postcode
+		self.params['temp'] = int(temp)
+		self.params['humidity']= int(humidity)
+		self.params['wind'] = int(wind)
+		self.params['delay'] = int(delay)
+		self.params['postcode'] = postcode
+		#save
+		pickle.dump(self.params,open(self.file,'w'))
 
 	def getParams(self):
-		return {'temp':self.temp,'humidity':self.humidity,'wind':self.wind,'delay':self.delay,'postcode':self.postcode}
+		return self.params
 
 	def getForecast(self):
 		#get from postcode forecast
-		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query%s&output=json" % (this.apikey,this.postcode)
+		url="http://www.myweather2.com/developer/forecast.ashx?uac=%s&query=%s&output=json" % (self.apikey,self.postcode)
+		print url
 		try:
 			res = requests.get(url).json()
 		except:
 			res = False
-		
+		#
 		current = None
 		temp = 0
 		humidity = 0
@@ -44,7 +54,6 @@ class gardenBridge(object):
 
 		if(res):
 			current = res['weather']['curren_weather'][0]
-			
 			#no rain data grep from text
 			wt = current['weather_text'].upper()
 			rl = ['MIST','RAIN','CLOUD']
@@ -60,7 +69,7 @@ class gardenBridge(object):
 			wind=int(current['wind'][0]['speed'])
 			
 			#check conditions
-			if humidity<=self.humidity and wind<=self.wind and temp>=self.temp:
+			if humidity<=self.params['humidity'] and wind<=self.params['wind'] and temp>=self.params['temp']:
 				switch=True
 
 		#print res
