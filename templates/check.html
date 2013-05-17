@@ -3,13 +3,9 @@
 {% block body %}
 
 	<div class="row">
-		<h1>System Status</h1>
-
 		<div class="span5">
+			<legend>Live Data Dump</legend>
 			<table class="table table-striped table-bordered">
-				<fieldset>
-					<legend>Live Data Dump</legend>
-
 					<thead>
 						<tr>
 							<th class="span3">Label</th>
@@ -24,50 +20,43 @@
 						</tr>
 						{% endfor %}
 					</tbody>
-
 			</table>
 		</div>
-		<div class="span5 offset2">
+		<div class="span5 offset1">
 			<div>
+				<legend>Settings Dump</legend>
 				<table class="table table-striped table-bordered">
-					<fieldset>
-						<legend>Settings Dump</legend>
+					<thead>
+						<tr>
+							<th class="span3">Label</th>
+							<th>Status</th>
+						</tr>
+					</thead>
 
-						<thead>
-							<tr>
-								<th class="span3">Label</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							{% for key, value in hparams.items() %}
-							<tr>
-								<td>{{key|capitalize}}</td><td>{{value}}</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-
+					<tbody>
+						{% for key, value in hparams.items() %}
+						<tr>
+							<td>{{key|capitalize}}</td><td>{{value}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
 				</table>
 			</div>
 			<div>
+				<legend>Arduino Dump</legend>
 				<table class="table table-striped table-bordered">
-					<fieldset>
-						<legend>Arduino Dumps</legend>
+					<thead>
+						<tr>
+							<th class="span3">Label</th>
+							<th>Status</th>
+						</tr>
+					</thead>
 
-						<thead>
-							<tr>
-								<th class="span3">Label</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr>
-								<td>Connection</td><td>{{connected}}</td>
-							</tr>
-						</tbody>
-
+					<tbody>
+						<tr>
+							<td>Connection</td><td>{{connected}}</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
