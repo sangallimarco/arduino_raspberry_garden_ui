@@ -58,17 +58,27 @@
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(drawChart);
 
-		function drawGauge(label,id,value,pvalue,from,to){
+		function drawGauge(label,id,value,pvalue,from,to,min,max){
 			var data = google.visualization.arrayToDataTable([
 				['Label', 'Value'],
 				[label, value],
 			]);
 
+			//normalize
+			if(to>max){
+				to=max;
+			}
+			if(from<min){
+				from = min;
+			}
+
 			var options = {
 				width: 200, height: 300,
 				redFrom: pvalue, redTo: pvalue+2,
 				greenFrom:from,greenTo:to,
-				minorTicks: 5
+				minorTicks: 5,
+				min:min,
+				max:max
 			};
 
 			var chart = new google.visualization.Gauge(document.getElementById(id));
@@ -77,9 +87,9 @@
 
 		//
 		function drawChart() {
-			drawGauge('Temp','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},100);
-			drawGauge('Hum','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}});
-			drawGauge('Wind','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}});
+			drawGauge('Temp','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
+			drawGauge('Hum','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
+			drawGauge('Wind','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
 		}
 	</script>
 {% endblock %}
