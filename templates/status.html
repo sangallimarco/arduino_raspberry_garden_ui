@@ -14,7 +14,12 @@
 				<div id="wind" class="span4"></div>
 			</div>
 			<legend>Controls</legend>
-			<button onclick="document.location.href='/remote/all'" class="btn btn-danger btn-large btn-block" {% if not switch or params['rain']: %}disabled{% endif %}>Start All Areas</button>
+			{% if not switch or params['rain']: %}
+				<button onclick="" class="btn btn-large btn-block" disabled>Start All Areas</button>			
+			{% else: %}	
+				<button onclick="document.location.href='/remote/all'" class="btn btn-danger btn-large btn-block">Start All Areas</button>
+			{% endif %}
+			
 			<button onclick="document.location.href='/remote/single'" class="btn btn-warning btn-large btn-block" {% if not switch: %}disabled_{% endif %}>Start Single Area</button>
 		</div>
 
