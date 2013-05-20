@@ -15,7 +15,7 @@
 			</div>
 			<legend>Controls</legend>
 			<button onclick="document.location.href='/remote/all'" class="btn btn-danger btn-large btn-block" {% if not switch or params['rain']: %}disabled{% endif %}>Start All Areas</button>
-			<button onclick="document.location.href='/remote/single'" class="btn btn-warning btn-large btn-block" {% if not switch: %}disabled{% endif %}>Start Single Area</button>
+			<button onclick="document.location.href='/remote/single'" class="btn btn-warning btn-large btn-block" {% if not switch: %}disabled_{% endif %}>Start Single Area</button>
 		</div>
 
 		<div class="span3 offset1">
