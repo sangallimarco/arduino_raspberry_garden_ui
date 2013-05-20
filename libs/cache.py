@@ -6,7 +6,7 @@ class memCache(object):
 	def __init__(self):
 		self.cache = {}
 
-	def set(self,key,val,ttl=30):
+	def set(self,key,val,ttl=300):
 		self.cache[key] = (time.time()+ttl, val)
 
 	def get(self,key):

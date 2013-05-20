@@ -65,7 +65,7 @@ class gardenBridge(object):
 			current = res['weather']['curren_weather'][0]
 			#no rain data grep from text
 			wt = current['weather_text'].upper()
-			rl = ['MIST','RAIN','CLOUD']
+			rl = ['MIST','RAIN','DRIZZLE']
 			
 			#check if it's raining
 			rain = False

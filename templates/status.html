@@ -6,7 +6,8 @@
 		
 
 		<div class="span8">
-			<legend>Parameters Configuration</legend>
+			<legend>Forecast: <span class="text-{% if not params['rain']:%}success{% else: %}error{% endif %}">{{params['current']|capitalize}}</span> 
+				<!--<i class="icon-{% if not params['rain']:%}ok{% else: %}warning-sign{% endif %}"></i></legend>-->
 			<div class="row-fluid">
 				<div id="temp" class="span4"></div>
 				<div id="hum" class="span4"></div>
