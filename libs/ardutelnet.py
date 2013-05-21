@@ -4,7 +4,14 @@ import telnetlib
 from threading import Thread
 import time
 
+########################################
+class engineUtils(object):
+	@classmethod
+	def setIp(cls,a,b):
+		return "#^%s%s" % (chr(a+32),chr(b+32))
 
+
+########################################
 class engineManager(Thread):
 	def __init__(self,host):
 		Thread.__init__(self)
