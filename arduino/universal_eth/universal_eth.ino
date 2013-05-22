@@ -5,10 +5,10 @@
 //############################################################
 //############################################################
 //############################################################
-int DRONE_ID=177;
 int eeprom_pin=9;
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 IPAddress ip(192,168,1,123);
+IPAddress subnet(255,255,0,0);
 //pin mode 2-12
 int modes[]={0,0,0,0,0,0,0,0,0,0};
 //
@@ -131,7 +131,7 @@ void readCommand(EthernetClient conn){
 		//set ip 192.168.x.x ex: 192.168.0.10
 		}else if(val=='^'){
 			EEPROM.write(0,msg[1]-32);
-                        EEPROM.write(1,msg[2]-32);
+			EEPROM.write(1,msg[2]-32);
 			ival=1;
           
 		//not found
@@ -143,7 +143,7 @@ void readCommand(EthernetClient conn){
 		conn.print("@");
 		//conn.print("[");
 		char buff[3];
-		//conn.print(itoa(DRONE_ID,buff,10));
+		//conn.print(itoa(1,buff,10));
 		//conn.print("]");
 		//
 		conn.print(msg[0]);
@@ -173,14 +173,14 @@ void setup() {
 	setMode(eeprom_pin,INPUT);
 	//pullup
 	digitalWrite(eeprom_pin,HIGH);
-	//if jumper on gnd to pin X, set default IP
-	if(digitalRead(eeprom_pin)){
-                ip[2]=EEPROM.read(0);
+	//if jumper on gnd to pin X
+	if(!digitalRead(eeprom_pin)){
+		ip[2]=EEPROM.read(0);
 		ip[3]=EEPROM.read(1);
 	}
 
 	//ethernet 
-	Ethernet.begin(mac, ip);
+	Ethernet.begin(mac, ip, subnet);
 	server.begin();
 	
 	//serial speed

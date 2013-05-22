@@ -1,11 +1,17 @@
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
+import ConfigParser, sys
 from gardenController import *
+
+#####################################################
+cf ='%s/main.cfg' % sys.path[0]
+config = ConfigParser.ConfigParser()
+config.read(cf)
 
 #####################################################
 app = Flask(__name__)
 
 #threaded process
-garden = customEngine("192.168.1.177")
+garden = customEngine(config.get('arduino', 'ip'))
 gardenBridge = gardenBridge()
 
 #######################
@@ -114,7 +120,7 @@ def page_not_found(error):
 #####################################################
 if __name__ == '__main__':
 	#run server
-	app.debug = True
+	app.debug = config.get('server', 'debug'),
 	app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 	app.run(host='0.0.0.0',port=8080,threaded=True)
 
