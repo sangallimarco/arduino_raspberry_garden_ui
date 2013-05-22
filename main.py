@@ -120,8 +120,8 @@ def page_not_found(error):
 #####################################################
 if __name__ == '__main__':
 	#run server
-	app.debug = config.get('server', 'debug'),
-	app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+	app.debug = config.get('server', 'debug')
+	app.secret_key = config.get('server', 'secret')
 	app.run(host='0.0.0.0',port=8080,threaded=True)
 
 	
