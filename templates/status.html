@@ -24,33 +24,48 @@
 		</div>
 
 		<div class="span3 offset1">
-			<form method="POST">
+			<form id="paramsform" method="POST">
 				<fieldset>
 					<legend>Change values</legend>
 
-					<label>Min Temperature Celsius</label>
-					<input type="text" placeholder="Type something…" name="temp" value="{{hparams['temp']}}">
-					</label>
+					<div class="control-group">
+						<label>Min Temperature Celsius</label>
+						<div class="control">
+							<input type="text" placeholder="Type something…" name="temp" value="{{hparams['temp']}}">
+						</div>
+					</div>
 
-					<label>Max Humidity %</label>
-					<input type="text" placeholder="Type something…" name="humidity" value="{{hparams['humidity']}}">
-					</label>
+					<div class="control-group">
+						<label>Max Humidity %</label>
+						<div class="control">
+							<input type="text" placeholder="Type something…" name="humidity" value="{{hparams['humidity']}}">
+						</div>
+					</div>
 
-					<label>Max Wind Mph</label>
-					<input type="text" placeholder="Type something…" name="wind" value="{{hparams['wind']}}">
-					</label>
+					<div class="control-group">
+						<label>Max Wind Mph</label>
+						<div class="control">
+							<input type="text" placeholder="Type something…" name="wind" value="{{hparams['wind']}}">
+						</div>
+					</div>
 
-					<label>Pump Watering Time (seconds)</label>
-					<input type="text" placeholder="Type something…" name="delay" value="{{hparams['delay']}}">
-					</label>
+					<div class="control-group">
+						<label>Pump Watering Time (seconds)</label>
+						<div class="control">
+							<input type="text" placeholder="Type something…" name="delay" value="{{hparams['delay']}}">
+						</div>
+					</div>
 
-					<label>Postcode</label>
-					<input type="text" placeholder="Type something…" name="postcode" value="{{hparams['postcode']}}">
-					</label>
+					<div class="control-group">
+						<label>Postcode</label>
+						<div class="control">
+							<input type="text" placeholder="Type something…" name="postcode" value="{{hparams['postcode']}}">
+						</div>
+					</div>
 					
 					<label>Set new values</label>
 					<button type="submit" class="btn btn-block">Submit</button>
-					</label?
+					
 				</fieldset>
 			</form>
 		</div>
@@ -60,6 +75,55 @@
 
 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 	<script type='text/javascript'>
+		$(document).ready(function(){
+			//form validation
+			$('#paramsform').validate({
+				rules: {
+					"temp": {
+						digits: true,
+						minlength: 1,
+						maxlength: 2,
+						required: true
+					},
+					"humidity": {
+						digits: true,
+						minlength: 1,
+						maxlength: 2,
+						required: true
+					},
+					"wind": {
+						digits: true,
+						minlength: 1,
+						maxlength: 2,
+						required: true
+					},
+					"delay": {
+						digits: true,
+						minlength: 2,
+						maxlength: 5,
+						required: true
+					},
+					"postcode": {
+						minlength: 3,
+						maxlength: 6,
+						required: true
+					},
+				},
+				highlight: function(label) {
+					$(label).closest('.control-group').removeClass('success').addClass('error');
+					console.log('error');
+				},
+				success: function(label) {
+					$(label).closest('.control-group').removeClass('error').addClass('success');
+				},
+				errorPlacement: function(em,el){
+					return true;
+				}
+			});
+		});
+
+
+		//gauges
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(drawChart);
 
