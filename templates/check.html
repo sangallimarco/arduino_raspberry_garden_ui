@@ -16,7 +16,7 @@
 					<tbody>
 						{% for key, value in params.items() %}
 						<tr>
-							<td>{{key|capitalize}}</td><td>{{value|bool_filter}}</td>
+							<td>{{key|capitalize}}</td><td>{{value|bool_filter|safe}}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -36,7 +36,7 @@
 					<tbody>
 						{% for key, value in hparams.items() %}
 						<tr>
-							<td>{{key|capitalize}}</td><td>{{value|bool_filter}}</td>
+							<td>{{key|capitalize}}</td><td>{{value|bool_filter|safe}}</td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -54,10 +54,10 @@
 
 					<tbody>
 						<tr>
-							<td>Connection</td><td>{{connected|bool_filter}}</td>
+							<td>Connection</td><td>{{connected|bool_filter|safe}}</td>
 						</tr>
 						<tr>
-							<td>Ready</td><td>{{ready|bool_filter}}</td>
+							<td>Ready</td><td>{{ready|bool_filter|safe}}</td>
 						</tr>
 					</tbody>
 				</table>

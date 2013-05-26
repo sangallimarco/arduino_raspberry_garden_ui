@@ -25,7 +25,7 @@ gardenBridge = gardenBridge()
 def bool_filter(s):
     if type(s) == bool:
     	if s:
-    		return '√'
+    		return '<i class="icon icon-ok"></i>'
     	else:
     		return ''
     else:
