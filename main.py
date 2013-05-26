@@ -27,7 +27,7 @@ def bool_filter(s):
     	if s:
     		return '<i class="icon icon-ok"></i>'
     	else:
-    		return ''
+    		return '<i class="icon icon-remove"></i>'
     else:
     	return s
 
