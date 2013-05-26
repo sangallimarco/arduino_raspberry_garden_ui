@@ -174,9 +174,9 @@ class customEngine(engineManager):
 		try:
 			self.timer.isAlive()
 		except:
-			return False
-		else:
 			return True
+		else:
+			return False
 
 ########################################
 if __name__=="__main__":

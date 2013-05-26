@@ -1,6 +1,10 @@
+ # -*- coding: utf-8 -*-
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
-import ConfigParser, sys
+import ConfigParser
 from gardenController import *
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 #####################################################
 cf ='%s/main.cfg' % sys.path[0]
@@ -13,6 +17,19 @@ app = Flask(__name__)
 #threaded process
 garden = customEngine(config.get('arduino', 'ip'))
 gardenBridge = gardenBridge()
+
+#######################
+# filter booleans #####
+#######################
+@app.template_filter('bool_filter')
+def bool_filter(s):
+    if type(s) == bool:
+    	if s:
+    		return '√'
+    	else:
+    		return ''
+    else:
+    	return s
 
 #######################
 # home page ###########
@@ -64,8 +81,11 @@ def check():
 	#if condition satisfied put engine on!
 	connected = garden.isConnected() 
 
+	#check if pumps are not working
+	ready = garden.isReady()
+
 	#return
-	return render_template('check.html',params=params,hparams=hparams,connected=connected)
+	return render_template('check.html',params=params,hparams=hparams,connected=connected, ready=ready)
 
 #######################
 # render status #######
