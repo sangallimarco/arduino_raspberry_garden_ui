@@ -14,9 +14,9 @@
 					</thead>
 
 					<tbody>
-						{% for key, value in params.items() %}
+						{% for key, value in params.items()|sort %}
 						<tr>
-							<td>{{key|capitalize}}</td><td>{{value|bool_filter|safe}}</td>
+							<td>{{key|capitalize}}</td><td><strong>{{value|bool_filter|safe}}</strong></td>
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -34,9 +34,9 @@
 					</thead>
 
 					<tbody>
-						{% for key, value in hparams.items() %}
+						{% for key, value in hparams.items()|sort %}
 						<tr>
-							<td>{{key|capitalize}}</td><td>{{value|bool_filter|safe}}</td>
+							<td>{{key|capitalize}}</td><td><strong>{{value|bool_filter|safe}}</strong></td>
 						</tr>
 						{% endfor %}
 					</tbody>
