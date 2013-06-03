@@ -57,6 +57,14 @@ class customEngine(object):
 		#
 		self.timer=actionTimer(cmd,self.sendCmd)
 
+	def isReady(self):
+		try:
+			self.timer.isAlive()
+		except:
+			return True
+		else:
+			return False
+
 ########################################
 if __name__=="__main__":
 	e=customEngine([12,13,14])
