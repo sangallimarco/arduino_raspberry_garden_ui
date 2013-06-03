@@ -1,3 +1,9 @@
 ARDUINO GARDEN UI
+==================
 
-Alpha version
+Beta version
+
+Requirements
+==================
+
+pip install Flask

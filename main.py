@@ -2,6 +2,7 @@
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
 import ConfigParser
 from gardenController import *
+import importlib
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -15,7 +16,20 @@ config.read(cf)
 app = Flask(__name__)
 
 #threaded process
-garden = customEngine(config.get('arduino', 'ip'))
+path = 'controllers.%s' % config.get('controller','type')
+ip = config.get('controller','ip')
+pins = config.get('controller','pins').split(',')
+bridge = config.get('controller','bridge')
+#
+try:
+	customEngine = getattr(importlib.import_module(path),'customEngine')
+except:
+	print "Error!"
+	garden = None
+else:
+	garden = customEngine(ip, pins, bridge)
+
+#bridge
 gardenBridge = gardenBridge()
 
 #######################
