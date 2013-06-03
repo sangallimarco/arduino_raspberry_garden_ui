@@ -1,7 +1,7 @@
  # -*- coding: utf-8 -*-
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
 import ConfigParser
-from gardenController import *
+from controllers.garden import *
 import importlib
 import sys
 reload(sys)
