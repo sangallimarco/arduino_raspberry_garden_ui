@@ -1,3 +1,6 @@
+#http://code.google.com/p/raspberry-gpio-python/wiki/Outputs
+#http://elinux.org/RPi_Low-level_peripherals#GPIO_hardware_hacking
+
 from threading import Thread
 import RPi.GPIO as GPIO
 
@@ -67,7 +70,7 @@ class customEngine(object):
 
 ########################################
 if __name__=="__main__":
-	e=customEngine([12,13,14])
+	e=customEngine([12,16,18])
 	#send command
 	while 1:
 		if e.isConnected():
