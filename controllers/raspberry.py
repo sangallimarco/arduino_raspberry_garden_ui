@@ -27,7 +27,7 @@ class actionTimer(Thread):
 class customEngine(object):
 	def __init__(self,host,pins,bridge):
 		self.pins = pins
-		self.time = None
+		self.timer = None
 		GPIO.setmode(GPIO.BOARD)
 		#init pins
 		for i in self.pins:

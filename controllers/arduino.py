@@ -40,7 +40,7 @@ class customEngine(engineManager):
 		#@@@p=pinger(self.sendCmd)
 		self.bridge = bridge
 		self.pins = pins
-		self.time = None
+		self.timer = None
 
 		engineManager.__init__(self,host)
 		
