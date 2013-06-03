@@ -1,4 +1,6 @@
- # -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
 import ConfigParser
 from controllers.garden import *

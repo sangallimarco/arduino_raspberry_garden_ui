@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 #http://code.google.com/p/raspberry-gpio-python/wiki/Outputs
 #http://elinux.org/RPi_Low-level_peripherals#GPIO_hardware_hacking
 
