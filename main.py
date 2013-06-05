@@ -16,7 +16,7 @@ config.read(cf)
 
 #####################################################
 app = Flask(__name__)
-
+	
 #threaded process
 path = 'controllers.%s' % config.get('controller','type')
 ip = config.get('controller','ip')
@@ -26,10 +26,11 @@ bridge = config.get('controller','bridge')
 try:
 	customEngine = getattr(importlib.import_module(path),'customEngine')
 except:
-	print "Error!"
-	garden = None
-else:
-	garden = customEngine(ip, pins, bridge)
+	path = 'controllers.dummy'
+	customEngine = getattr(importlib.import_module(path),'customEngine')
+
+#set engine
+garden = customEngine(ip, pins, bridge)
 
 #bridge
 gardenBridge = gardenBridge()
