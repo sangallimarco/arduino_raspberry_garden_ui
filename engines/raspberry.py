@@ -16,9 +16,6 @@ class actionTimer(Thread):
 		self.callback=callback
 		self.start()
 
-	def isAlive(self):
-		return True
-		
 	def run(self):
 		while len(self.actions)>0:
 			pin,status,t=self.actions.pop(0)
@@ -68,13 +65,12 @@ class customEngine(object):
 		self.timer=actionTimer(cmd,self.sendCmd)
 
 	def isReady(self):
-		self.timer.isAlive()
 		try:
-			self.timer.isAlive()
+			status = self.timer.isAlive()
 		except:
 			return True
 		else:
-			return False
+			return not status
 
 ########################################
 if __name__=="__main__":

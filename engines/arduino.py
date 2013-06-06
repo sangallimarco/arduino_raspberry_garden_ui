@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from libs.ardutelnet import engineManager
 from threading import Thread
 
@@ -9,9 +12,6 @@ class actionTimer(Thread):
 		self.callback=callback
 		self.start()
 
-	def isAlive(self):
-		return True
-		
 	def run(self):
 		while len(self.actions)>0:
 			cmd,t=self.actions.pop(0)
@@ -89,11 +89,11 @@ class customEngine(engineManager):
 
 	def isReady(self):
 		try:
-			self.timer.isAlive()
+			status = self.timer.isAlive()
 		except:
 			return True
 		else:
-			return False
+			return not status
 
 ########################################
 if __name__=="__main__":
