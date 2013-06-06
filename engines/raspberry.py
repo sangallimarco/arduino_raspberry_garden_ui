@@ -68,6 +68,7 @@ class customEngine(object):
 		self.timer=actionTimer(cmd,self.sendCmd)
 
 	def isReady(self):
+		self.timer.isAlive()
 		try:
 			self.timer.isAlive()
 		except:
