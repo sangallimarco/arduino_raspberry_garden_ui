@@ -75,9 +75,9 @@ def activate():
 
 	#if condition satisfied put engine on!
 	connected = garden.isConnected() 
-	if switch and connected:
+	if connected:
 		if garden.isReady():
-			if not params['rain']:
+			if switch and not params['rain']:
 				garden.pumpsOn(hparams['delay'])
 				pumps = 'All'
 			else:
@@ -110,7 +110,7 @@ def check():
 	ready = garden.isReady()
 
 	#return
-	return render_template('check.html',params=params,hparams=hparams,connected=connected, ready=ready)
+	return render_template('check.html',params=params,hparams=hparams,connected=connected,ready=ready)
 
 #######################
 # render status #######
@@ -127,8 +127,11 @@ def status():
 	switch,params = gardenBridge.getForecast()
 	hparams = gardenBridge.getParams()
 
+	#check if pumps are not working
+	ready = garden.isReady()
+
 	#render page
-	return render_template('status.html',switch=switch,params=params,hparams=hparams)
+	return render_template('status.html',switch=switch,params=params,hparams=hparams,ready=ready)
 
 #######################
 # force system ########

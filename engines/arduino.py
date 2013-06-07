@@ -19,6 +19,8 @@ class actionTimer(Thread):
 			self.callback(cmd)
 			#
 			time.sleep(t)
+		#release
+		self.callback = None
 			
 ########################################
 class pinger(Thread):

@@ -21,6 +21,8 @@ class actionTimer(Thread):
 			self.callback()
 			#
 			time.sleep(5)
+		#release
+		self.callback = None
 
 ########################################
 class customEngine(object):

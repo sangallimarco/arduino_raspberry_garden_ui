@@ -23,6 +23,8 @@ class actionTimer(Thread):
 			self.callback(pin,status)
 			#
 			time.sleep(t)
+		#release
+		self.callback = None 
 
 ########################################
 class customEngine(object):
