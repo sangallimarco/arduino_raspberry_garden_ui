@@ -25,6 +25,7 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
+		genericEngine.__init__(self,actionTimer)
 		self.bridge = bridge
 		self.pins = pins
 		self.timer = None

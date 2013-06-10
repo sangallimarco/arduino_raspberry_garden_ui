@@ -26,19 +26,16 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(genericEngine):
 	def __init__(self,host,pins,bridge):
+		genericEngine.__init__(self,actionTimer)
+		self.bridge = int(bridge)
+		self.pins = [int(x) for x in pins]
 		print "Dummy Controller, Please check your config"
 
 	def createCmd(self,pin,on,off):
-		print "Create command"
+		print "Create command %s" % pin
+		return [pin]
 
 	def sendCmd(self):
 		print "Send command"
 
-	def pumpsOn(self,on=10,off=1):
-		print "All Pumps On"
-		self.timer=actionTimer([1,2,3,4],self.sendCmd)
-
-	def singlepumpOn(self,on=10,off=2):
-		print "Simgle Pump On"
-		self.timer=actionTimer([1,2,3,4],self.sendCmd)
 
