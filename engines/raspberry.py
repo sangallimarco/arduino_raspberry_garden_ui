@@ -3,15 +3,14 @@
 
 #http://code.google.com/p/raspberry-gpio-python/wiki/Outputs
 #http://elinux.org/RPi_Low-level_peripherals#GPIO_hardware_hacking
-
-from threading import Thread
 import RPi.GPIO as GPIO
 import time
+from generic import *
 
 ########################################
-class actionTimer(Thread):
+class actionTimer(genericTimer):
 	def __init__(self,actions,callback):
-		Thread.__init__(self)
+		genericTimer.__init__(self)
 		self.actions=actions
 		self.callback=callback
 		self.start()
@@ -27,7 +26,7 @@ class actionTimer(Thread):
 		self.callback = None 
 
 ########################################
-class customEngine(object):
+class customEngine(genericEngine):
 	def __init__(self,host,pins,bridge):
 		#convert to int
 		self.bridge = int(bridge)
@@ -39,9 +38,6 @@ class customEngine(object):
 		for i in self.pins:
 			GPIO.setup(i, GPIO.OUT)
 
-	def isConnected(self):
-		return True
-
 	def createCmd(self,pin,on,off):
 		cmd = [
 			[pin, 1, on], #open valve
@@ -52,27 +48,6 @@ class customEngine(object):
 	def sendCmd(self,pin,status):
 		GPIO.output(pin,status)
 
-	def pumpsOn(self,on=10,off=1):
-		#pass all to a timer
-		cmd = []
-		for i in self.pins:
-			cmd += self.createCmd(i,on,off)
-		#
-		self.timer=actionTimer(cmd,self.sendCmd)
-
-	def singlepumpOn(self,on=10,off=2):
-		#pass all to a timer
-		cmd = self.createCmd(self.pins[0],on,off)
-		#
-		self.timer=actionTimer(cmd,self.sendCmd)
-
-	def isReady(self):
-		try:
-			status = self.timer.isAlive()
-		except:
-			return True
-		else:
-			return not status
 
 ########################################
 if __name__=="__main__":

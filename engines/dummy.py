@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from threading import Thread
 import time
+from generic import *
 
 ########################################
-class actionTimer(Thread):
+class actionTimer(genericTimer):
 	def __init__(self,actions,callback):
-		Thread.__init__(self)
+		genericTimer.__init__(self)
 		self.actions=actions
 		self.callback=callback
 		self.alive=True
@@ -25,12 +24,9 @@ class actionTimer(Thread):
 		self.callback = None
 
 ########################################
-class customEngine(object):
+class customEngine(genericEngine):
 	def __init__(self,host,pins,bridge):
 		print "Dummy Controller, Please check your config"
-
-	def isConnected(self):
-		return True
 
 	def createCmd(self,pin,on,off):
 		print "Create command"
@@ -46,11 +42,3 @@ class customEngine(object):
 		print "Simgle Pump On"
 		self.timer=actionTimer([1,2,3,4],self.sendCmd)
 
-	def isReady(self):
-		try:
-			status = self.timer.isAlive()
-		except:
-			return True
-		else:
-			return not status
-		

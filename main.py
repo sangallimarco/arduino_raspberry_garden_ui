@@ -147,11 +147,16 @@ def remote(type):
 			if type == 'all':
 				garden.pumpsOn(hparams['delay'])
 				flash('All Pumps Activated', 'success')
-			else:
+			elif type == 'single':
 				garden.singlepumpOn(hparams['delay'])
 				flash('Protected Area Pump Activated', 'success')
+		
 		else:
 			flash('Pumps Running...', 'warning')
+		#stop pumps
+		if type == 'stop':
+			garden.stop()
+			flash('All Pumps Off','success')
 	else:
 		flash('ARDUINO not connected!', 'error')
 

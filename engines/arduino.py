@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from libs.ardutelnet import engineManager
-from threading import Thread
+from generic import *
 import time
 
 ########################################
-class actionTimer(Thread):
+class actionTimer(genericTimer):
 	def __init__(self,actions,callback):
-		Thread.__init__(self)
+		genericTimer.__init__(self)
 		self.actions=actions
 		self.callback=callback
 		self.start()
@@ -22,25 +21,10 @@ class actionTimer(Thread):
 			time.sleep(t)
 		#release
 		self.callback = None
-			
-########################################
-class pinger(Thread):
-	def __init__(self,callback):
-		Thread.__init__(self)
-		self.callback=callback
-		self.start()
-		
-	def run(self):
-		while 1:
-			print "SENDING PING"
-			self.callback("#~A0\n")
-			#
-			time.sleep(1)
 		
 ########################################
-class customEngine(engineManager):
+class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
-		#@@@p=pinger(self.sendCmd)
 		self.bridge = bridge
 		self.pins = pins
 		self.timer = None
@@ -75,28 +59,6 @@ class customEngine(engineManager):
 			["#>%s1\n#>%s1\n" % (self.bridge,pin), off] #sleep
 		]
 		return cmd
-		
-	def pumpsOn(self,on=10,off=1):
-		#pass all to a timer
-		cmd = []
-		for i in self.pins:
-			cmd += self.createCmd(i,on,off)
-		#
-		self.timer=actionTimer(cmd,self.sendCmd)
-		
-	def singlepumpOn(self,on=10,off=2):
-		#pass all to a timer
-		cmd = self.createCmd(self.pins[0],on,off)
-		#
-		self.timer=actionTimer(cmd,self.sendCmd)
-
-	def isReady(self):
-		try:
-			status = self.timer.isAlive()
-		except:
-			return True
-		else:
-			return not status
 
 ########################################
 if __name__=="__main__":
