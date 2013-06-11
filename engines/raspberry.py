@@ -10,10 +10,7 @@ from generic import *
 ########################################
 class actionTimer(genericTimer):
 	def __init__(self,actions,callback):
-		genericTimer.__init__(self)
-		self.actions=actions
-		self.callback=callback
-		self.start()
+		genericTimer.__init__(self,actions,callback)
 
 	def run(self):
 		while len(self.actions)>0:
@@ -23,16 +20,12 @@ class actionTimer(genericTimer):
 			#
 			time.sleep(t)
 		#release
-		self.callback = None 
+		self.stop()
 
 ########################################
 class customEngine(genericEngine):
 	def __init__(self,host,pins,bridge):
-		genericEngine.__init__(self,actionTimer)
-		#convert to int
-		self.bridge = int(bridge)
-		self.pins = [int(x) for x in pins]
-		self.timer = None
+		genericEngine.__init__(self,[int(x) for x in pins],int(bridge),actionTimer)
 		#set board mode
 		GPIO.setmode(GPIO.BOARD)
 		#init pins
@@ -48,19 +41,3 @@ class customEngine(genericEngine):
 
 	def sendCmd(self,pin,status):
 		GPIO.output(pin,status)
-
-
-########################################
-if __name__=="__main__":
-	e=customEngine([12,16,18])
-	#send command
-	while 1:
-		if e.isConnected():
-			#pumps on!
-			e.pumpsOn(10)
-			#
-			time.sleep(120)
-		else:
-			time.sleep(2)
-		
-		print "----------------"

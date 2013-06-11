@@ -7,10 +7,7 @@ import time
 ########################################
 class actionTimer(genericTimer):
 	def __init__(self,actions,callback):
-		genericTimer.__init__(self)
-		self.actions=actions
-		self.callback=callback
-		self.start()
+		genericTimer.__init__(self,actions,callback)
 
 	def run(self):
 		while len(self.actions)>0:
@@ -20,16 +17,12 @@ class actionTimer(genericTimer):
 			#
 			time.sleep(t)
 		#release
-		self.callback = None
+		self.stop()
 		
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
-		genericEngine.__init__(self,actionTimer)
-		self.bridge = bridge
-		self.pins = pins
-		self.timer = None
-
+		genericEngine.__init__(self,pins,bridge,actionTimer)
 		engineManager.__init__(self,host)
 		
 	def onConnect(self):
