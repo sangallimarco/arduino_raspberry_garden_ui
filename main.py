@@ -142,21 +142,21 @@ def remote(type):
 	connected = garden.isConnected()
 	hparams = gardenBridge.getParams()
 	if connected: 
+		#stop pumps
+		if type == 'stop':
+			garden.stop()
+			flash('All Pumps Off','success')
 		#check if is ready to accept a new queue
-		if garden.isReady():
+		elif garden.isReady():
 			if type == 'all':
 				garden.pumpsOn(hparams['delay'])
 				flash('All Pumps Activated', 'success')
 			elif type == 'single':
 				garden.singlepumpOn(hparams['delay'])
 				flash('Protected Area Pump Activated', 'success')
-		
 		else:
 			flash('Pumps Running...', 'warning')
-		#stop pumps
-		if type == 'stop':
-			garden.stop()
-			flash('All Pumps Off','success')
+		
 	else:
 		flash('ARDUINO not connected!', 'error')
 
