@@ -31,7 +31,6 @@ class customEngine(engineManager,genericEngine):
 			cmd = [
 				"*\n",
 				"*\n",
-				"#>%s1\n" % self.bridge #reset bridge
 			]
 			#add pins
 			for i in self.pins:
@@ -46,11 +45,8 @@ class customEngine(engineManager,genericEngine):
 		
 	def createCmd(self,pin,on,off):
 		cmd = [
-			["#>%s0\n#>%s0\n" % (self.bridge,pin), off], #open valve
-			["#>%s0\n#>%s1\n" % (self.bridge,pin), off], #change bridge
-			["#>%s1\n#>%s1\n" % (self.bridge,pin), on], #sleep
-			["#>%s1\n#>%s0\n" % (self.bridge,pin), off], #close valve
-			["#>%s1\n#>%s1\n" % (self.bridge,pin), off] #sleep
+			["#>%s1\n" % (self.bridge,pin), off], #open valve
+			["#>%s0\n" % (self.bridge,pin), off], #close valve
 		]
 		return cmd
 
