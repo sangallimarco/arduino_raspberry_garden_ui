@@ -1,5 +1,5 @@
 [server]
-debug = true
+debug = False
 secret = abcdefghi1234567890
 
 [forecast]
