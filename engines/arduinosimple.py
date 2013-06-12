@@ -45,7 +45,7 @@ class customEngine(engineManager,genericEngine):
 		
 	def createCmd(self,pin,on,off):
 		cmd = [
-			["#>%s1\n" % (self.bridge,pin), off], #open valve
+			["#>%s1\n" % (self.bridge,pin), on], #open valve
 			["#>%s0\n" % (self.bridge,pin), off], #close valve
 		]
 		return cmd
