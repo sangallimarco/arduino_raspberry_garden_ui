@@ -21,13 +21,13 @@
 			{% if not switch or params['rain'] or not ready: %}
 				<button onclick="" class="btn btn-large btn-block" disabled>Start All Areas</button>			
 			{% else: %}	
-				<button onclick="document.location.href='/remote/all'" class="btn btn-success btn-large btn-block">Start All Areas</button>
+				<button onclick="document.location.href='/remote/all'" class="btn btn-info btn-large btn-block">Start All Areas</button>
 			{% endif %}
 			
 			{% if not ready: %}
 				<button onclick="" class="btn btn-large btn-block" disabled>Start Single Area</button>
 			{% else: %}
-				<button onclick="document.location.href='/remote/single'" class="btn btn-success btn-large btn-block">Start Single Area</button>
+				<button onclick="document.location.href='/remote/single'" class="btn btn-info btn-large btn-block">Start Single Area</button>
 			{% endif %}
 		</div>
 
