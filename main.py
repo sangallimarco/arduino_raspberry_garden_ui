@@ -163,7 +163,7 @@ def remote(type):
 			flash('Pumps Running...', 'warning')
 		
 	else:
-		flash('ARDUINO not connected!', 'error')
+		flash('Device not connected!', 'error')
 
 	#return a flag
 	return redirect(url_for('status'))
