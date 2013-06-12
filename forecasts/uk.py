@@ -8,7 +8,7 @@ import pickle
 from libs.cache import memCache
 
 ########################################
-class gardenBridge(object):
+class customBridge(object):
 	def __init__(self,apikey='.frFFHX1sj'):
 		self.params = {}
 		self.cache = memCache()

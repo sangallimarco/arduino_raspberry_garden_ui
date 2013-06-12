@@ -3,7 +3,6 @@
 
 from flask import Flask, request, session, render_template, flash, redirect, url_for, jsonify
 import ConfigParser
-from engines.garden import *
 import importlib
 import sys
 reload(sys)
@@ -25,7 +24,6 @@ app = Flask(__name__)
 path = 'engines.%s' % config.get('engine','type')
 ip = config.get('engine','ip')
 pins = config.get('engine','pins').split(',')
-bridge = config.get('engine','bridge')
 #
 try:
 	customEngine = getattr(importlib.import_module(path),'customEngine')
@@ -34,10 +32,17 @@ except:
 	customEngine = getattr(importlib.import_module(path),'customEngine')
 
 #set engine
-garden = customEngine(ip, pins, bridge)
+garden = customEngine(ip, pins)
 
 #bridge
-gardenBridge = gardenBridge()
+path = 'forecasts.%s' % config.get('forecast','type')
+try:
+	customBridge = getattr(importlib.import_module(path),'customBridge')
+except:
+	path = 'forecasts.uk'
+	customBridge = getattr(importlib.import_module(path),'customBridge')
+
+gardenBridge = customBridge()
 
 #####################################################
 # Flask controllers #################################

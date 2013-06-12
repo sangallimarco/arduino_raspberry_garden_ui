@@ -2,21 +2,25 @@
 debug = true
 secret = abcdefghi1234567890
 
+[forecast]
+type = uk
+
 [engine]
 type = arduino
-pins = D,E,F,G
-bridge = C
+pins = C,D,E,F,G
 ip = 192.168.0.20
 
 [engine2]
 type = raspberry
 pins = 12,16,18
-bridge = 0
 ip = 127.0.0.1
 
 [engine3]
 type = dummy
 pins = 1,2,3
-bridge = 0
 ip = 127.0.0.1
 
+[engine4]
+type = arduinosimple
+pins = D,E,F,G,H
+ip = 192.168.1.46

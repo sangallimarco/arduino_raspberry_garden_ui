@@ -22,7 +22,7 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
-		genericEngine.__init__(self,pins,bridge,actionTimer)
+		genericEngine.__init__(self,pins,actionTimer)
 		engineManager.__init__(self,host)
 		
 	def onConnect(self):

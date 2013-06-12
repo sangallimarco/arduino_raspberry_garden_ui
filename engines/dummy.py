@@ -22,8 +22,8 @@ class actionTimer(genericTimer):
 
 ########################################
 class customEngine(genericEngine):
-	def __init__(self,host,pins,bridge):
-		genericEngine.__init__(self,[int(x) for x in pins],int(bridge),actionTimer)
+	def __init__(self,host,pins):
+		genericEngine.__init__(self,[int(x) for x in pins],actionTimer)
 		print "Dummy Controller, Please check your config"
 
 	def createCmd(self,pin,on,off):
