@@ -12,7 +12,7 @@ ip = 192.168.0.20
 
 [engine2]
 type = raspberry
-pins = 12,16,18
+pins = 12,16,18,22 #GPIO 18,23,24,25 http://elinux.org/RPi_Low-level_peripherals
 ip = 127.0.0.1
 
 [engine3]
