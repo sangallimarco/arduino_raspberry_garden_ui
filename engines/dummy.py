@@ -11,9 +11,9 @@ class actionTimer(genericTimer):
 	def run(self):
 		print "Started"
 		while len(self.actions)>0:
-			action,delay =self.actions.pop(0)
-			print "Timer action: %s, delay:%s" % (action, delay)
-			self.callback()
+			pin,status,delay =self.actions.pop(0)
+			print "Timer action: %s, status:%s, delay:%s" % (pin, status, delay)
+			self.callback(pin,status)
 			#
 			time.sleep(delay)
 		#release
@@ -27,14 +27,15 @@ class customEngine(genericEngine):
 		print "Dummy Controller, Please check your config"
 
 	def setup(self):
-		print "Setup"
+		for pin in self.pins:
+			print "Reset pin: %s" % pin
 
 	def createCmd(self,pin,on,off):
 		print "Create command pin: %s" % pin
 		return [
-				[pin,on],
-				[pin,off]
+				[pin,1,on],
+				[pin,0,off]
 				]
 
-	def sendCmd(self):
-		print "Send command"
+	def sendCmd(self,pin,status):
+		print "Send command: %s -> %s" % (pin,status)
