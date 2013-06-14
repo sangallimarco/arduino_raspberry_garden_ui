@@ -25,8 +25,6 @@ class customEngine(genericEngine):
 	def __init__(self,host,pins):
 		genericEngine.__init__(self,[int(x) for x in pins],actionTimer)
 		print "Dummy Controller, Please check your config"
-		#setup
-		self.setup()
 
 	def setup(self):
 		print "Setup"

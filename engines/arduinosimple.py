@@ -27,19 +27,20 @@ class customEngine(engineManager,genericEngine):
 
 	#called from engineManager and genericEngine when stopped 		
 	def setup(self):
-			print "RESET SYSTEM"
-			#append 
-			cmd = [
-				"*\n",
-				"*\n",
-			]
-			#add pins
-			for i in self.pins:
-				cmd.append("#%s>1\n" % i)
-			self.cmd=cmd+self.cmd
+			if self.isConnected():
+				print "RESET SYSTEM"
+				#append 
+				cmd = [
+					"*\n",
+					"*\n",
+				]
+				#add pins
+				for i in self.pins:
+					cmd.append("#%s>1\n" % i)
+				self.cmd=cmd+self.cmd
 
-			#set thread tick
-			#self.setTick(0.5)
+				#set thread tick
+				#self.setTick(0.5)
 	
 	def onData(self,engine,data):
 		print "DATA FROM ARDUINO: %s" % data[:-1]

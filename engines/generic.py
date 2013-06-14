@@ -24,11 +24,12 @@ class genericEngine(object):
 		self.pins = pins
 		self.timer = None
 		self.timerClass = timerClass
-
+		#setup
+		self.setup()
 
 	#create your own methods
 	def setup(self):
-		return True
+		pass
 
 	def isConnected(self):
 		return True
