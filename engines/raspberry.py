@@ -28,6 +28,10 @@ class customEngine(genericEngine):
 		genericEngine.__init__(self,[int(x) for x in pins],actionTimer)
 		#set board mode
 		GPIO.setmode(GPIO.BOARD)
+		#init board
+		self.setup()
+
+	def setup(self):
 		#init pins
 		for i in self.pins:
 			GPIO.setup(i, GPIO.OUT)

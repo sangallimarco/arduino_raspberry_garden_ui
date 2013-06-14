@@ -22,13 +22,13 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins):
-		genericEngine.__init__(self,pins,actionTimer)
+		genericEngine.__init__(self,pins[1:],actionTimer)
 		engineManager.__init__(self,host)
 		#bridge, first pin
 		self.bridge = self.pins[0]
-		self.pins = self.pins[1:]
 		
-	def onConnect(self):
+	#called from engineManager and genericEngine when stopped 
+	def setup(self):
 			print "RESET SYSTEM"
 			#append 
 			cmd = [

@@ -39,7 +39,7 @@ class engineManager(Thread):
 			self.conn = None
 			time.sleep(1)
 		else:
-			self.onConnect()
+			self.setup()
 		#
 		return self.conn
 		
@@ -106,7 +106,7 @@ class engineManager(Thread):
 			return False
 
 	#---------------------------------
-	def onConnect(self):
+	def setup(self):
 		pass
 		
 	def onData(self,data):

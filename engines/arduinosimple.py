@@ -24,8 +24,9 @@ class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
 		genericEngine.__init__(self,pins,actionTimer)
 		engineManager.__init__(self,host)
-		
-	def onConnect(self):
+
+	#called from engineManager and genericEngine when stopped 		
+	def setup(self):
 			print "RESET SYSTEM"
 			#append 
 			cmd = [
@@ -45,8 +46,8 @@ class customEngine(engineManager,genericEngine):
 		
 	def createCmd(self,pin,on,off):
 		cmd = [
-			["#>%s1\n" % (self.bridge,pin), on], #open valve
-			["#>%s0\n" % (self.bridge,pin), off], #close valve
+			["#>%s1\n" % pin,on], #open valve
+			["#>%s0\n" % pin,off], #close valve
 		]
 		return cmd
 

@@ -25,7 +25,11 @@ class genericEngine(object):
 		self.timer = None
 		self.timerClass = timerClass
 
+
 	#create your own methods
+	def setup(self):
+		return True
+
 	def isConnected(self):
 		return True
 
@@ -50,6 +54,8 @@ class genericEngine(object):
 			self.timer.stop()
 		except:
 			pass
+		#reinit system
+		self.setup()
 
 	#loop all the pins
 	def pumpsOn(self,on=10,off=1):
