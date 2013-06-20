@@ -23,7 +23,7 @@ class actionTimer(genericTimer):
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins):
 		genericEngine.__init__(self,pins,actionTimer,False)
-		engineManager.__init__(self,host,pins)
+		engineManager.__init__(self,host)
 		
 	#called from engineManager and genericEngine when stopped 		
 	def setup(self):
