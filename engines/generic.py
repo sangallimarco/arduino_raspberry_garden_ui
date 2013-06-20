@@ -20,12 +20,13 @@ class genericTimer(Thread):
 
 ########################################
 class genericEngine(object):
-	def __init__(self,pins,timerClass = genericTimer):
+	def __init__(self,pins,timerClass = genericTimer,setup = True):
 		self.pins = pins
 		self.timer = None
 		self.timerClass = timerClass
 		#setup
-		self.setup()
+		if setup:
+			self.setup()
 
 	#create your own methods
 	def setup(self):

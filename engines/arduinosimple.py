@@ -22,9 +22,9 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins):
-		engineManager.__init__(self,host)
-		genericEngine.__init__(self,pins,actionTimer)
-
+		genericEngine.__init__(self,pins,actionTimer,False)
+		engineManager.__init__(self,host,pins)
+		
 	#called from engineManager and genericEngine when stopped 		
 	def setup(self):
 		if self.isConnected():
