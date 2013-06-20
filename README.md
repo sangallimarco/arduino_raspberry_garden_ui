@@ -1,4 +1,4 @@
-ARDUINO GARDEN UI
+ARDUINO RASPBERRY PI GARDEN
 ==================
 
 Beta version
