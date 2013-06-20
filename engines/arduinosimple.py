@@ -22,8 +22,8 @@ class actionTimer(genericTimer):
 ########################################
 class customEngine(engineManager,genericEngine):
 	def __init__(self,host, pins,bridge):
-		genericEngine.__init__(self,pins,actionTimer)
 		engineManager.__init__(self,host)
+		genericEngine.__init__(self,pins,actionTimer)
 
 	#called from engineManager and genericEngine when stopped 		
 	def setup(self):
