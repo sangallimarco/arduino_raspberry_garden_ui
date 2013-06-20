@@ -49,6 +49,7 @@ class customBridge(genericBridge):
 			humidity = int(float(red[1]))
 			wind = int(float(green[0]))
 			rain = int(float(red[4]))
+			current = "CONNECTED"
 
 			#switch or not
 			if humidity<=self.params['humidity'] and wind<=self.params['wind'] and temp>=self.params['temp']:
