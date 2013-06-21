@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Arduino raspberry garden ui : Flask UI to drive arduino ethernet or raspberry" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Arduino raspberry garden ui</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/sangallimarco/arduino_raspberry_garden_ui">View on GitHub</a>
+
+          <h1 id="project_title">Arduino raspberry garden ui</h1>
+          <h2 id="project_tagline">Flask UI to drive arduino ethernet or raspberry</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/sangallimarco/arduino_raspberry_garden_ui/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/sangallimarco/arduino_raspberry_garden_ui/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="arduinoraspberry-pi-garden" class="anchor" href="#arduinoraspberry-pi-garden"><span class="octicon octicon-link"></span></a>ARDUINO/RASPBERRY PI GARDEN</h1>
+
+<p><img src="https://raw.github.com/sangallimarco/arduino_raspberry_garden_ui/master/static/img/screenshot_status.png" alt="alt tag"></p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>pip install Flask</li>
+<li>pip install Requests</li>
+</ul><h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>copy the main.cfg.template to main.cfg and choose the right engine</p>
+
+<h3>
+<a name="engines" class="anchor" href="#engines"><span class="octicon octicon-link"></span></a>Engines:</h3>
+
+<ul>
+<li>arduinosimple : simple solenoid valve (on open , off closed)</li>
+<li>arduino : first pin in the list is used to drive the bridge (solenoid that requires current inversion to change state)</li>
+<li>raspberry : please refer to GPIO pinout and buy a 3.3V signal relay</li>
+<li>dummy : test purpose only</li>
+</ul><h3>
+<a name="forecast-engine" class="anchor" href="#forecast-engine"><span class="octicon octicon-link"></span></a>Forecast Engine:</h3>
+
+<ul>
+<li>uk</li>
+<li>it</li>
+</ul><h2>
+<a name="arduino" class="anchor" href="#arduino"><span class="octicon octicon-link"></span></a>Arduino</h2>
+
+<p>If you use Arduino to drive your valves please use the .ino provided and amend the ip setting </p>
+
+<h2>
+<a name="lets-start" class="anchor" href="#lets-start"><span class="octicon octicon-link"></span></a>Let's Start</h2>
+
+<p>python main.py</p>
+
+<p>now open a browser and go to address http://localhost:8080</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Arduino raspberry garden ui maintained by <a href="https://github.com/sangallimarco">sangallimarco</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
