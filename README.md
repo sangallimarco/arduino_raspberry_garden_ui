@@ -1,11 +1,11 @@
-ARDUINO RASPBERRY PI GARDEN
+ARDUINO/RASPBERRY PI GARDEN
 ---------------------------
 ![alt tag](https://raw.github.com/sangallimarco/arduino_raspberry_garden_ui/master/static/img/screenshot_status.png)
 
 Requirements
 ------------
 * pip install Flask
-* pip install requests
+* pip install Requests
 
 Configuration
 -------------
@@ -15,4 +15,5 @@ Let's Start
 -----------
 python main.py
 
+now open a browser and go to address http://localhost:8080
 
