@@ -16,19 +16,21 @@
 				<div id="wind" class="span4"></div>
 			</div>
 			<legend>Controls</legend>
-			<button onclick="document.location.href='/remote/stop'" class="btn btn-danger btn-large btn-block">Stop Areas</button>
+			<div class="row-fluid">
+				<button onclick="document.location.href='/remote/stop'" class="btn btn-danger btn-large btn-circle span4">Stop</button>
 
-			{% if not switch or params['rain'] or not ready: %}
-				<button onclick="" class="btn btn-large btn-block" disabled>Start All Areas</button>			
-			{% else: %}	
-				<button onclick="document.location.href='/remote/all'" class="btn btn-success btn-large btn-block">Start All Areas</button>
-			{% endif %}
-			
-			{% if not ready: %}
-				<button onclick="" class="btn btn-large btn-block" disabled>Start Single Area</button>
-			{% else: %}
-				<button onclick="document.location.href='/remote/single'" class="btn btn-large btn-block">Start Single Area</button>
-			{% endif %}
+				{% if not switch or params['rain'] or not ready: %}
+					<button onclick="" class="btn btn-large btn-circle span4" disabled>Start</button>			
+				{% else: %}	
+					<button onclick="document.location.href='/remote/all'" class="btn btn-success btn-large btn-circle span4">Start</button>
+				{% endif %}
+				
+				{% if not ready: %}
+					<button onclick="" class="btn btn-large btn-circle span4" disabled>Test</button>
+				{% else: %}
+					<button onclick="document.location.href='/remote/single'" class="btn btn-large btn-circle span4">Test</button>
+				{% endif %}
+			</div>
 		</div>
 
 		<div class="span3 offset1">
@@ -51,7 +53,7 @@
 					</div>
 
 					<div class="control-group">
-						<label>Max Wind Mph</label>
+						<label>Max Wind Km/h</label>
 						<div class="control">
 							<input type="text" placeholder="Type something…" name="wind" value="{{hparams['wind']}}">
 						</div>
@@ -164,9 +166,9 @@
 
 		//
 		function drawChart() {
-			drawGauge('Temp','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
-			drawGauge('Hum','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
-			drawGauge('Wind','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
+			drawGauge('TEMP','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
+			drawGauge('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
+			drawGauge('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
 		}
 	</script>
 {% endblock %}
