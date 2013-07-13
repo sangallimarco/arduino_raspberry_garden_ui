@@ -39,7 +39,7 @@ class customEngine(engineManager,genericEngine):
 			]
 			#add pins
 			for i in self.pins:
-				cmd.append("#%s>1\n" % i)
+				cmd.append("#>%s1\n" % i)
 			self.cmd=cmd+self.cmd
 
 			#set thread tick
