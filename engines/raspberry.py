@@ -26,10 +26,10 @@ class actionTimer(genericTimer):
 class customEngine(genericEngine):
 	def __init__(self,host,pins):
 		genericEngine.__init__(self,[int(x) for x in pins],actionTimer)
+		
+	def setup(self):
 		#set board mode
 		GPIO.setmode(GPIO.BOARD)
-
-	def setup(self):
 		#init pins
 		for i in self.pins:
 			GPIO.setup(i, GPIO.OUT)
