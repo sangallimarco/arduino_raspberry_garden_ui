@@ -17,3 +17,13 @@ python main.py
 
 now open a browser and go to address http://localhost:8080
 
+Raspberry pi InitScript
+-----------------------
+Open a shell and execute:
+
+cp scripts/garden in /etc/init.d
+chmod +x /etc/init.d/garden
+update-rc.d garden defaults
+reboot
+
+
