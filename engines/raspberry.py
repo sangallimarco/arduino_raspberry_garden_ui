@@ -33,6 +33,7 @@ class customEngine(genericEngine):
 		#init pins
 		for i in self.pins:
 			GPIO.setup(i, GPIO.OUT)
+			GPIO.output(i, 0)
 
 	def createCmd(self,pin,on,off):
 		cmd = [
