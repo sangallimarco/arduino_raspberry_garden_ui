@@ -156,6 +156,9 @@ def remote(type):
 			if type == 'all':
 				garden.pumpsOn(hparams['delay'])
 				flash('All Pumps Activated', 'success')
+			elif type == 'test':
+				garden.pumpsOn(10)
+				flash('All Pumps Activated', 'success')
 			elif type == 'single':
 				garden.singlepumpOn(hparams['delay'])
 				flash('Protected Area Pump Activated', 'success')
