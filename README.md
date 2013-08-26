@@ -4,8 +4,7 @@ ARDUINO/RASPBERRY PI GARDEN
 
 Requirements
 ------------
-* pip install Flask
-* pip install Requests
+pip install -r requirements.txt
 
 Configuration
 -------------
