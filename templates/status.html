@@ -84,7 +84,22 @@
 
 
 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	<script type='text/javascript' src='/static/js/gauges.js'></script>
 	<script type='text/javascript'>
+
+		//google chart gauges
+		GaugeManager = new GaugesManager();
+		google.load('visualization', '1', {packages:['gauge']});
+		google.setOnLoadCallback(function(){
+				//init gauges
+				GaugeManager.add('TEMP','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
+				GaugeManager.add('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
+				GaugeManager.add('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
+				//render all
+				GaugeManager.render();
+				//init ajax call
+				refreshView();
+			});
 
 		//refresh view if status changes
 		$('body').data('status',null);
@@ -97,58 +112,19 @@
 						document.location.href = document.location.pathname;
 					} 
 					//update gauges
-					var params = data.params;
-					drawChart(params.temp, params.humidity, params.wind);
+					GaugeManager.data('temp',data.params.temp); 
+					GaugeManager.data('hum',data.params.humidity); 
+					GaugeManager.data('wind',data.params.wind); 
+					//render
+					GaugeManager.render();
 				})
 				.done(function(){
 					setTimeout(refreshView, 15000);
 				});
 		}
-		
-		//google chart gauges
-		google.load('visualization', '1', {packages:['gauge']});
-		google.setOnLoadCallback(drawChart);
-		//
-		function drawGauge(label,id,value,pvalue,from,to,min,max){
-			var data = google.visualization.arrayToDataTable([
-				['Label', 'Value'],
-				[label, value],
-			]);
-			//normalize
-			if(to > max){
-				to = max;
-			}
-			if(from < min){
-				from = min;
-			}
-			var options = {
-				width: 200, height: 300,
-				//redFrom: pvalue, redTo: pvalue+1,
-				greenFrom:from,greenTo:to,
-				minorTicks: 5,
-				min:min,
-				max:max
-			};
-			var chart = new google.visualization.Gauge(document.getElementById(id));
-			chart.draw(data, options);
-		}
-
-		//function called from google charts and updated by ajax
-		function drawChart(t,h,w) {
-			//set defaults from controller then use ajax to update values
-			t = typeof(t) == 'number' ? t : {{params['temp']}};
-			h = typeof(h) == 'number' ? h : {{params['humidity']}};
-			w = typeof(w) == 'number' ? w : {{params['wind']}};
-			//
-			drawGauge('TEMP','temp',t,{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
-			drawGauge('HUM','hum',h,{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
-			drawGauge('WIND','wind',w,{{hparams['wind']}},0,{{hparams['wind']}},0,50);
-		}
 
 		//
 		$(document).ready(function(){
-			//init ajax call
-			refreshView();
 
 			//form validation
 			$('#paramsform').validate({
