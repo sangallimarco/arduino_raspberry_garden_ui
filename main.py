@@ -178,7 +178,11 @@ def remote(type):
 def ajax(type):
 	#get status pumps
 	if type == 'status':
-		return jsonify(connection = garden.isConnected(),status = garden.isReady())
+		switch,params = gardenBridge.getForecast()
+		status = garden.isReady()
+		connection = garden.isConnected()
+		#
+		return jsonify(connection = connection,status = status, params = params)
 	else:
 		return jsonify(status = False)
 
