@@ -172,6 +172,18 @@ def remote(type):
 	return redirect(url_for('status'))
 
 #######################
+# ajax calls ##########
+#######################
+@app.route('/ajax/<type>')
+def ajax(type):
+	#get status pumps
+	if type == 'status':
+		return jsonify(connection = garden.isConnected(),status = garden.isReady())
+	else:
+		return jsonify(status = False)
+
+
+#######################
 # 404 error ###########
 #######################
 @app.errorhandler(404)

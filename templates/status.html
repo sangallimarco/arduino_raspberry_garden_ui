@@ -85,7 +85,28 @@
 
 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 	<script type='text/javascript'>
+
+		//refresh view if status changes
+		$('body').data('status',null);
+		function refreshView(){
+			$.getJSON('ajax/status', function(data) {
+					//check if stored data has changed
+					if(!$('body').data('status')){
+						$('body').data('status',data);
+					}else if(data.status != $('body').data('status').status){
+						document.location.href = document.location.pathname;
+					} 
+				})
+				.done(function(){
+					setTimeout(refreshView, 5000);
+				});
+		}
+		
+		//
 		$(document).ready(function(){
+			//init ajax call
+			refreshView();
+
 			//form validation
 			$('#paramsform').validate({
 				rules: {
@@ -142,7 +163,6 @@
 				['Label', 'Value'],
 				[label, value],
 			]);
-
 			//normalize
 			if(to>max){
 				to=max;
@@ -150,7 +170,6 @@
 			if(from<min){
 				from = min;
 			}
-
 			var options = {
 				width: 200, height: 300,
 				//redFrom: pvalue, redTo: pvalue+1,
@@ -159,7 +178,6 @@
 				min:min,
 				max:max
 			};
-
 			var chart = new google.visualization.Gauge(document.getElementById(id));
 			chart.draw(data, options);
 		}
@@ -170,6 +188,8 @@
 			drawGauge('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
 			drawGauge('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
 		}
+
+		//
 	</script>
 {% endblock %}
 
