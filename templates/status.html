@@ -88,15 +88,15 @@
 	<script type='text/javascript'>
 
 		//google chart gauges
-		GaugeManager = new GaugesManager();
+		GManager = new GaugesManager();
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(function(){
 				//init gauges
-				GaugeManager.add('TEMP','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
-				GaugeManager.add('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
-				GaugeManager.add('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
+				GManager.add('TEMP','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
+				GManager.add('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
+				GManager.add('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
 				//render all
-				GaugeManager.render();
+				GManager.render();
 				//init ajax call
 				refreshView();
 			});
@@ -112,11 +112,11 @@
 						document.location.href = document.location.pathname;
 					} 
 					//update gauges
-					GaugeManager.data('temp',data.params.temp); 
-					GaugeManager.data('hum',data.params.humidity); 
-					GaugeManager.data('wind',data.params.wind); 
+					GManager.data('temp',data.params.temp); 
+					GManager.data('hum',data.params.humidity); 
+					GManager.data('wind',data.params.wind); 
 					//render
-					GaugeManager.render();
+					GManager.render();
 				})
 				.done(function(){
 					setTimeout(refreshView, 15000);
