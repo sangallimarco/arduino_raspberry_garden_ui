@@ -101,14 +101,14 @@
 				refreshView();
 			});
 
-		//refresh view if status changes
-		$('body').data('status',null);
+		//refresh view if status changed
+		Gstatus = null;
 		function refreshView(){
 			$.getJSON('ajax/status', function(data) {
 					//check if stored data has changed
-					if(!$('body').data('status')){
-						$('body').data('status',data);
-					}else if(data.status != $('body').data('status').status){
+					if(!Gstatus){
+						Gstatus = data;
+					}else if(data.status != Gstatus.status){
 						document.location.href = document.location.pathname;
 					} 
 					//update gauges
@@ -123,10 +123,8 @@
 				});
 		}
 
-		//
+		//form validation
 		$(document).ready(function(){
-
-			//form validation
 			$('#paramsform').validate({
 				rules: {
 					"temp": {
@@ -172,7 +170,6 @@
 			});
 		});
 
-		//
 	</script>
 {% endblock %}
 
