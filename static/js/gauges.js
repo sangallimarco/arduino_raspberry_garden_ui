@@ -31,7 +31,11 @@ GaugesManager.prototype = {
 			greenFrom:from,greenTo:to,
 			minorTicks: 5,
 			min:min,
-			max:max
+			max:max,
+			animation:{
+						duration: 2000,
+						easing: 'inAndOut',
+						},
 		};
 		var chart = new google.visualization.Gauge(document.getElementById(id));
 		//store data
