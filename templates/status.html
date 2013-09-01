@@ -133,13 +133,20 @@
 						.removeClass()
 						.addClass(col);
 
-					//if ready
-					if(data.status){
-						$('#btn-start')
-							.addClass('btn-success')
+					//test button
+					if(data.status){	
+						$('#btn-test')
 							.removeClass('disable')
 							.removeAttr('disabled');
+					}else{
 						$('#btn-test')
+							.addClass('disable')
+							.attr('disabled','disabled');
+					}
+					//start button
+					if(data.status && !data.params.rain){
+						$('#btn-start')
+							.addClass('btn-success')
 							.removeClass('disable')
 							.removeAttr('disabled');
 					}else{
@@ -147,10 +154,8 @@
 							.removeClass('btn-success')
 							.addClass('disable')
 							.attr('disabled','disabled');
-						$('#btn-test')
-							.addClass('disable')
-							.attr('disabled','disabled');
 					}
+
 					//update gauges
 					GManager.data('temp', data.params.temp); 
 					GManager.data('hum', data.params.humidity); 
