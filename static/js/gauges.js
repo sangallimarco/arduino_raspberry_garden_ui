@@ -10,6 +10,8 @@ GaugesManager.prototype = {
 			//render
 			this.chart.draw(this.data,this.options);
 		});
+		//
+		return this;
 	},
 	add:function(label,id,value,pvalue,from,to,min,max){
 		var data = google.visualization.arrayToDataTable([
@@ -34,9 +36,13 @@ GaugesManager.prototype = {
 		var chart = new google.visualization.Gauge(document.getElementById(id));
 		//store data
 		this.gauges[id] = ({data:data, chart:chart, options:options});
+		//
+		return this;
 	},
 	data:function(key,val){
 		this.gauges[key].data.setValue(0, 1, val);
+		//
+		return this;
 	}
 
 

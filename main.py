@@ -69,31 +69,53 @@ def index():
 	return render_template('index.html')
 
 #######################
-# call it from cron ###
+# ajax calls ##########
 #######################
-@app.route('/activate')
-def activate():
+@app.route('/activate/<type>')
+def activate(type):
 	#get values from testThread
 	switch,params = gardenBridge.getForecast()
 	hparams = gardenBridge.getParams()
-	pumps = 'Off'
+	message = 'All Pumps Off'
+	message_type = 'success'
+
+	#check ts
+	if type == 'test':
+		delay = 10
+	else:
+		delay = hparams['delay']
 
 	#if condition satisfied put engine on!
 	connected = garden.isConnected() 
 	if connected:
 		if garden.isReady():
 			if switch and not params['rain']:
-				garden.pumpsOn(hparams['delay'])
-				pumps = 'All'
+				garden.pumpsOn(delay)
+				message = 'All Pumps On'
 			else:
-				garden.singlepumpOn(hparams['delay'])
-				pumps = 'Single'
+				garden.singlepumpOn(delay)
+				message = 'Single Pump On'
 		else:
-			pumps = 'Running'
+			message = 'System is Running'
+			message_type = 'error'
 
 	#return a flag
-	return jsonify(connected=connected, switch=switch, rain=params['rain'], pumps=pumps)
+	return jsonify(connected=connected, switch=switch, rain=params['rain'], message=message, message_type=message_type)
 	
+@app.route('/stop')
+def stop():
+	garden.stop()
+	return jsonify(status = True)
+
+@app.route('/refresh')
+def refresh():
+	#get status pumps
+	switch,params = gardenBridge.getForecast()
+	status = garden.isReady()
+	connection = garden.isConnected()
+	#
+	return jsonify(connection = connection,status = status, params = params, switch = switch)
+
 #######################
 # call it from cron ###
 #######################
@@ -137,55 +159,6 @@ def status():
 
 	#render page
 	return render_template('status.html',switch=switch,params=params,hparams=hparams,ready=ready)
-
-#######################
-# force system ########
-#######################
-@app.route('/remote/<type>')
-def remote(type):
-	#if condition satisfied put engine on!
-	connected = garden.isConnected()
-	hparams = gardenBridge.getParams()
-	if connected: 
-		#stop pumps
-		if type == 'stop':
-			garden.stop()
-			flash('All Pumps Off','success')
-		#check if is ready to accept a new queue
-		elif garden.isReady():
-			if type == 'all':
-				garden.pumpsOn(hparams['delay'])
-				flash('All Pumps Activated', 'success')
-			elif type == 'test':
-				garden.pumpsOn(10)
-				flash('All Pumps Activated', 'success')
-			elif type == 'single':
-				garden.singlepumpOn(hparams['delay'])
-				flash('Protected Area Pump Activated', 'success')
-		else:
-			flash('Pumps Running...', 'warning')
-		
-	else:
-		flash('Device not connected!', 'error')
-
-	#return a flag
-	return redirect(url_for('status'))
-
-#######################
-# ajax calls ##########
-#######################
-@app.route('/ajax/<type>')
-def ajax(type):
-	#get status pumps
-	if type == 'status':
-		switch,params = gardenBridge.getForecast()
-		status = garden.isReady()
-		connection = garden.isConnected()
-		#
-		return jsonify(connection = connection,status = status, params = params)
-	else:
-		return jsonify(status = False)
-
 
 #######################
 # 404 error ###########

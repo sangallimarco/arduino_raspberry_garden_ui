@@ -6,8 +6,7 @@
 		
 
 		<div class="span8">
-			<legend>Forecast: <span class="text-{% if not params['rain']:%}success{% else: %}error{% endif %}">{{params['current']|capitalize}}</span>
-				<!--<i class="icon-{% if not params['rain']:%}ok{% else: %}warning-sign{% endif %}"></i>-->
+			<legend>Forecast: <span id="forecast"></span>
 			</legend>
 
 			<div class="row-fluid">
@@ -17,19 +16,9 @@
 			</div>
 			<legend>Controls</legend>
 			<div class="row-fluid">
-				<button onclick="document.location.href='/remote/stop'" class="btn btn-danger btn-large btn-circle span4">Stop</button>
-
-				{% if not switch or params['rain'] or not ready: %}
-					<button onclick="" class="btn btn-large btn-circle span4" disabled>Start</button>			
-				{% else: %}	
-					<button onclick="document.location.href='/remote/all'" class="btn btn-success btn-large btn-circle span4">Start</button>
-				{% endif %}
-				
-				{% if not ready: %}
-					<button onclick="" class="btn btn-large btn-circle span4" disabled>Test</button>
-				{% else: %}
-					<button onclick="document.location.href='/remote/test'" class="btn btn-large btn-circle span4">Test</button>
-				{% endif %}
+				<button onclick="execute('stop')" class="btn btn-danger btn-large btn-circle span4">Stop</button>
+				<button id="btn-test" onclick="execute('test')" class="btn btn-large btn-circle span4">Test</button>
+				<button id="btn-start" onclick="execute('start')" class="btn btn-large btn-circle span4">Start</button>
 			</div>
 		</div>
 
@@ -92,35 +81,107 @@
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(function(){
 				//init gauges
-				GManager.add('TEMP','temp',{{params['temp']}},{{hparams['temp']}},{{hparams['temp']}},50,-20,50);
-				GManager.add('HUM','hum',{{params['humidity']}},{{hparams['humidity']}},0,{{hparams['humidity']}},0,100);
-				GManager.add('WIND','wind',{{params['wind']}},{{hparams['wind']}},0,{{hparams['wind']}},0,50);
+				GManager.add(
+								'TEMP',
+								'temp',
+								{{params['temp']}},
+								{{hparams['temp']}},
+								{{hparams['temp']}},
+								50,
+								-20,
+								50
+							);
+				GManager.add(
+								'HUM',
+								'hum',
+								{{params['humidity']}},
+								{{hparams['humidity']}},
+								0,
+								{{hparams['humidity']}},
+								0,
+								100
+							);
+				GManager.add(
+								'WIND',
+								'wind',
+								{{params['wind']}},
+								{{hparams['wind']}},
+								0,
+								{{hparams['wind']}},
+								0,
+								50
+							);
 				//render all
 				GManager.render();
+
 				//init ajax call
 				refreshView();
 			});
 
 		//refresh view if status changed
-		Gstatus = null;
 		function refreshView(){
-			$.getJSON('ajax/status', function(data) {
+			$.getJSON('/refresh', function(data) {
 					//check if stored data has changed
-					if(!Gstatus){
-						Gstatus = data;
-					}else if(data.status != Gstatus.status){
-						document.location.href = document.location.pathname;
-					} 
+					var col = 'text-success';
+					if(data.params.rain){
+						col = 'text-error';
+					}
+
+					//set forecast text
+					$('#forecast')
+						.text(data.params.current)
+						.removeClass()
+						.addClass(col);
+
+					//if ready
+					if(data.status){
+						$('#btn-start')
+							.addClass('btn-success')
+							.removeClass('disable')
+							.removeAttr('disabled');
+						$('#btn-test')
+							.removeClass('disable')
+							.removeAttr('disabled');
+					}else{
+						$('#btn-start')
+							.removeClass('btn-success')
+							.addClass('disable')
+							.attr('disabled','disabled');
+						$('#btn-test')
+							.addClass('disable')
+							.attr('disabled','disabled');
+					}
 					//update gauges
-					GManager.data('temp',data.params.temp); 
-					GManager.data('hum',data.params.humidity); 
-					GManager.data('wind',data.params.wind); 
+					GManager.data('temp', data.params.temp); 
+					GManager.data('hum', data.params.humidity); 
+					GManager.data('wind', data.params.wind); 
 					//render
 					GManager.render();
 				})
 				.done(function(){
-					setTimeout(refreshView, 15000);
+					setTimeout(refreshView, 5000);
 				});
+		}
+		//execute commands
+		function execute(cmd){
+			var dict = {
+						'start':'/activate/all',
+						'test':'/activate/test',
+						'stop':'/stop'
+					};
+			//
+			$.getJSON(dict[cmd], function(data) {
+				$('#messages')
+					.removeClass()
+					.addClass('alert')
+					.addClass('alert-'+data.message_type)
+					.html('<h4>'+data.message+'</h4>')
+					.delay(2000)
+					.fadeOut(200);
+			})
+			.done(function(){
+				refreshView();
+			});
 		}
 
 		//form validation
@@ -159,7 +220,6 @@
 				},
 				highlight: function(label) {
 					$(label).closest('.control-group').removeClass('success').addClass('error');
-					console.log('error');
 				},
 				success: function(label) {
 					$(label).closest('.control-group').removeClass('error').addClass('success');

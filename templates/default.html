@@ -33,15 +33,16 @@
 		<div class="container">
 
 			<div class="row">
-			{% with messages = get_flashed_messages(with_categories=true) %}
-				{% if messages %}
-					{% for category, message in messages %}
-						<div class="alert alert-{{ category }}"><h4>{{ message }}</h4></div>
-					{% endfor %}
-				{% endif %}
-			{% endwith %}
+				{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+						{% for category, message in messages %}
+							<div class="alert alert-{{ category }}"><h4>{{ message }}</h4></div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+				<div id="messages"></div> 
 			</div>
-
+			
 			{% block body %}
 			{% endblock %}
 
