@@ -172,6 +172,7 @@
 			//
 			$.getJSON(dict[cmd], function(data) {
 				$('#messages')
+					.fadeIn('400')
 					.removeClass()
 					.addClass('alert')
 					.addClass('alert-'+data.message_type)

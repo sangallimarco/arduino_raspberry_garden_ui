@@ -105,7 +105,9 @@ def activate(type):
 @app.route('/stop')
 def stop():
 	garden.stop()
-	return jsonify(status = True)
+	message_type = 'error'
+	message = 'All Pumps Off'
+	return jsonify(status = True , message=message, message_type=message_type)
 
 @app.route('/refresh')
 def refresh():
