@@ -5,6 +5,8 @@ from flask import Flask, request, session, render_template, flash, redirect, url
 import ConfigParser
 import importlib
 import sys
+from forecasts.openweathermap import customBridge
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -19,11 +21,12 @@ config.read(cf)
 # init threads ######################################
 #####################################################
 app = Flask(__name__)
-	
+
 #threaded process
 path = 'engines.%s' % config.get('engine','type')
 ip = config.get('engine','ip')
 pins = config.get('engine','pins').split(',')
+
 #
 try:
 	customEngine = getattr(importlib.import_module(path),'customEngine')
@@ -31,16 +34,17 @@ except:
 	path = 'engines.dummy'
 	customEngine = getattr(importlib.import_module(path),'customEngine')
 
+
 #set engine
 garden = customEngine(ip, pins)
 
 #bridge
-path = 'forecasts.%s' % config.get('forecast','type')
-try:
-	customBridge = getattr(importlib.import_module(path),'customBridge')
-except:
-	path = 'forecasts.uk'
-	customBridge = getattr(importlib.import_module(path),'customBridge')
+# path = 'forecasts.%s' % config.get('forecast','type')
+# try:
+# 	customBridge = getattr(importlib.import_module(path),'customBridge')
+# except:
+# 	path = 'forecasts.uk'
+# 	customBridge = getattr(importlib.import_module(path),'customBridge')
 
 gardenBridge = customBridge()
 
@@ -86,7 +90,7 @@ def activate(type):
 		delay = hparams['delay']
 
 	#if condition satisfied put engine on!
-	connected = garden.isConnected() 
+	connected = garden.isConnected()
 	if connected:
 		if garden.isReady():
 			if switch and not params['rain']:
@@ -101,7 +105,7 @@ def activate(type):
 
 	#return a flag
 	return jsonify(connected=connected, switch=switch, rain=params['rain'], message=message, message_type=message_type)
-	
+
 @app.route('/stop')
 def stop():
 	garden.stop()
@@ -133,7 +137,7 @@ def check():
 	hparams = gardenBridge.getParams()
 
 	#if condition satisfied put engine on!
-	connected = garden.isConnected() 
+	connected = garden.isConnected()
 
 	#check if pumps are not working
 	ready = garden.isReady()
@@ -148,7 +152,7 @@ def check():
 def status():
 	#get parameters
 	if request.method == 'POST':
-		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind'],request.form['delay'],request.form['postcode']) 
+		gardenBridge.setParams(request.form['temp'], request.form['humidity'], request.form['wind'],request.form['delay'],request.form['postcode'])
 		flash('New params saved', 'success')
 		return redirect(url_for('status'))
 
@@ -177,5 +181,3 @@ if __name__ == '__main__':
 	app.debug = config.getboolean('server', 'debug')
 	app.secret_key = config.get('server', 'secret')
 	app.run(host='0.0.0.0',port=8080,threaded=True)
-
-	
