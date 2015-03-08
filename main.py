@@ -46,7 +46,7 @@ garden = customEngine(ip, pins)
 # 	path = 'forecasts.uk'
 # 	customBridge = getattr(importlib.import_module(path),'customBridge')
 
-gardenBridge = customBridge()
+gardenBridge = customBridge(config.get('forecast','key'))
 
 #####################################################
 # Flask controllers #################################

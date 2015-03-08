@@ -4,6 +4,7 @@ secret = abcdefghi1234567890
 
 [forecast]
 type = uk
+key = 1234
 
 [engine]
 type = arduino
