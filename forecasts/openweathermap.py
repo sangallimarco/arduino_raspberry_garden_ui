@@ -13,7 +13,7 @@ class customBridge(genericBridge):
 
 	def getForecast(self):
 		#get from postcode forecast
-		url="http://api.openweathermap.org/data/2.5/weather?q=%s" % (self.params['postcode'])
+		url="http://api.openweathermap.org/data/2.5/weather?APPID=%s&q=%s" % (self.apikey, self.params['postcode'])
 
 		#check cache
 		res = False
