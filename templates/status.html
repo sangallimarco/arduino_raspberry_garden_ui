@@ -3,7 +3,7 @@
 {% block body %}
 
 	<div class="row">
-		
+
 
 		<div class="span8">
 			<legend>Forecast: <span id="forecast"></span>
@@ -61,10 +61,10 @@
 							<input type="text" placeholder="Type something…" name="postcode" value="{{hparams['postcode']}}">
 						</div>
 					</div>
-					
+
 					<label>Set new values</label>
 					<button type="submit" class="btn btn-block">Submit</button>
-					
+
 				</fieldset>
 			</form>
 		</div>
@@ -134,7 +134,7 @@
 						.addClass(col);
 
 					//test button
-					if(data.status){	
+					if(data.status){
 						$('#btn-test')
 							.removeClass('disable')
 							.removeAttr('disabled');
@@ -157,9 +157,9 @@
 					}
 
 					//update gauges
-					GManager.data('temp', data.params.temp); 
-					GManager.data('hum', data.params.humidity); 
-					GManager.data('wind', data.params.wind); 
+					GManager.data('temp', data.params.temp);
+					GManager.data('hum', data.params.humidity);
+					GManager.data('wind', data.params.wind);
 					//render
 					GManager.render();
 				})
@@ -220,7 +220,7 @@
 					},
 					"postcode": {
 						minlength: 3,
-						maxlength: 6,
+						maxlength: 20,
 						required: true
 					},
 				},
@@ -238,4 +238,3 @@
 
 	</script>
 {% endblock %}
-

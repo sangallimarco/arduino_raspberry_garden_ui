@@ -49,7 +49,7 @@ class customBridge(genericBridge):
 				wind=int(res['wind']['speed'])
 
 			# kelvin temp
-			temp=int(current['temp']) - 273.15
+			temp=int(current['temp'] - 273.15)
 			humidity=int(current['humidity'])
 
 			#check conditions

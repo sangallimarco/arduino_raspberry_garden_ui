@@ -12,7 +12,7 @@ class genericBridge:
 	def __init__(self,apikey='.frFFHX1sj'):
 		self.params = {}
 		self.cache = memCache()
-		self.postcode = 'RM9'
+		self.postcode = 'London, uk'
 		self.apikey = apikey
 		self.file = 'app.cfg'
 		#get from stored params
@@ -22,7 +22,7 @@ class genericBridge:
 		try:
 			self.params = pickle.load(open(self.file,'r'))
 		except:
-			self.params = {'temp':5,'humidity':90,'wind':8,'delay':60*5,'postcode':'RM9'}
+			self.params = {'temp':5,'humidity':90,'wind':8,'delay':60*5,'postcode':'London, uk'}
 
 	def setParams(self,temp,humidity,wind,delay,postcode):
 		self.params['temp'] = int(temp)
@@ -44,5 +44,3 @@ class genericBridge:
 	def getForecast(self):
 		#print res
 		return switch,{'temp':0,'humidity':0,'wind':0,'rain':0,'current':0}
-			
-
